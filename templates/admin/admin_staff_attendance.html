@@ -1,0 +1,194 @@
+{% extends 'admin/admin_navbar.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="content">
+    <div class="pb-6">
+        <h2 class="mb-4">Attendance</h2>
+        <div id="lealsTable"
+            data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'>
+            <div class="row g-3 justify-content-between mb-4">
+                <div class="col-auto">
+                    <div class="d-md-flex justify-content-between">
+                        <div><button class="btn btn-primary me-4"><span class="fas fa-plus me-2"></span>Create
+                                Lead</button><button class="btn btn-link text-900 px-0"><span
+                                    class="fa-solid fa-file-export fs--1 me-2"></span>Export</button></div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="d-flex">
+                        <div class="search-box me-2">
+                            <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input
+                                    class="form-control search-input search" type="search" placeholder="Search by name"
+                                    aria-label="Search" />
+                                <span class="fas fa-search search-box-icon"></span>
+                            </form>
+                        </div>
+                    
+                        <div class="modal fade" id="filterModal" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content border">
+                                    <form id="addEventForm" autocomplete="off">
+                                        <div class="modal-header border-200 p-4">
+                                            <h5 class="modal-title text-1000 fs-2 lh-sm">Filter</h5><button
+                                                class="btn p-1 text-900" type="button" data-bs-dismiss="modal"
+                                                aria-label="Close"><span class="fas fa-times fs--1"></span></button>
+                                        </div>
+                                        <div class="modal-body pt-4 pb-2 px-4">
+                                            <div class="mb-3"><label class="fw-bold mb-2 text-1000"
+                                                    for="leadStatus">Lead Status</label><select class="form-select"
+                                                    id="leadStatus">
+                                                    <option value="newLead" selected="selected">New Lead</option>
+                                                    <option value="coldLead">Cold Lead</option>
+                                                    <option value="wonLead">Won Lead</option>
+                                                    <option value="canceled">Canceled</option>
+                                                </select></div>
+                                            <div class="mb-3"><label class="fw-bold mb-2 text-1000"
+                                                    for="createDate">Create Date</label><select class="form-select"
+                                                    id="createDate">
+                                                    <option value="today" selected="selected">Today</option>
+                                                    <option value="last7Days">Last 7 Days</option>
+                                                    <option value="last30Days">Last 30 Days</option>
+                                                    <option value="chooseATimePeriod">Choose a time period</option>
+                                                </select></div>
+                                            <div class="mb-3"><label class="fw-bold mb-2 text-1000"
+                                                    for="designation">Designation</label><select class="form-select"
+                                                    id="designation">
+                                                    <option value="VPAccounting" selected="selected">VP Accounting
+                                                    </option>
+                                                    <option value="ceo">CEO</option>
+                                                    <option value="creativeDirector">Creative Director</option>
+                                                    <option value="accountant">Accountant</option>
+                                                    <option value="executiveManager">Executive Manager</option>
+                                                </select></div>
+                                        </div>
+                                        <div
+                                            class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 border-0 pt-3">
+                                            <button class="btn btn-sm btn-phoenix-primary px-4 fs--2 my-0"
+                                                type="submit"> <span
+                                                    class="fas fa-arrows-rotate me-2 fs--2"></span>Reset</button><button
+                                                class="btn btn-sm btn-primary px-9 fs--2 my-0"
+                                                type="submit">Done</button></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                <table class="table fs--1 mb-0 leads-table">
+                    <thead>
+                        <tr>
+
+                            <th class="sort white-space-nowrap align-middle text-uppercase ps-0" scope="col"
+                                data-sort="name" style="width:25%;">Name</th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col"
+                                data-sort="email" style="width:15%;">
+                                <div class="d-inline-flex flex-center">
+                                    <div class="d-flex align-items-center px-1 py-1 bg-success-100 rounded me-2"><span
+                                            class="text-success-600 dark__text-success-300" data-feather="calendar"></span>
+                                    </div><span>Date</span>
+                                </div>
+                            </th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col"
+                                data-sort="phone" style="width:15%; min-width: 180px;">
+                                <div class="d-inline-flex flex-center">
+                                    <div class="d-flex align-items-center px-1 py-1 bg-primary-100 rounded me-2"><span
+                                            class="text-primary-600 dark__text-primary-300" data-feather="wifi"></span>
+                                    </div><span>Checkin_time</span>
+                                </div>
+                            </th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col"
+                                data-sort="contact" style="width:15%;">
+                                <div class="d-inline-flex flex-center">
+                                    <div class="d-flex align-items-center px-1 py-1 bg-danger-100 rounded me-2"><span
+                                            class="text-danger-600 dark__text-danger-300" data-feather="wifi-off"></span></div>
+                                    <span>Checkout_time</span>
+                                </div>
+                            </th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col"
+                                data-sort="company" style="width:15%;">
+                                <div class="d-inline-flex flex-center">
+                                    <div class="d-flex align-items-center px-1 py-1 bg-warning-100 rounded me-2"><span
+                                            class="text-warning-600 dark__text-warning-300" data-feather="clipboard"></span>
+                                    </div><span>Work Report</span>
+                                </div>
+                            </th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col"
+                                data-sort="company" style="width:15%;">
+                                <div class="d-inline-flex flex-center">
+                                    <div class="d-flex align-items-center px-1 py-1 bg-info-100 rounded me-2"><span
+                                            class="text-info-600 dark__text-info-300" data-feather="eye"></span>
+                                    </div><span>Status</span>
+                                </div>
+                            </th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody class="list" id="leal-tables-body">
+                       
+                         
+                       
+
+                        {% for sa in staff_attnds reversed %}
+                        <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                           
+                            <td class="name align-middle white-space-nowrap ps-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl me-3"><img class="rounded-circle"
+                                            src="{{sa.staff.photo.url}}" alt="" /></div>
+                                    <div><a class="fs-0 fw-bold" href="{% url 'admin_staff_breaktimeview' sa.id %}">{{sa.staff.fullname}}</a>
+                                        
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="email align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                                {{sa.date}}</td>
+                            <td class="phone align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                                {{sa.checkin_time}}</td>
+                            <td class="contact align-middle white-space-nowrap ps-4 border-end fw-semi-bold text-1000">
+                                {{sa.checkout_time}}</td>
+                            <td
+                                class="company align-middle white-space-nowrap text-600 ps-4 border-end fw-semi-bold text-1000">
+                                {{sa.work_report}}</td>
+                            <td class="date align-middle white-space-nowrap text-600 ps-4 border-end fw-semi-bold text-1000">{{sa.attendance_status}}
+                            </td>
+                            
+                        </tr>
+
+                        {% endfor %}
+
+
+
+
+
+
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="row align-items-center justify-content-end py-4 pe-0 fs--1">
+                <div class="col-auto d-flex">
+                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info"></p><a
+                        class="fw-semi-bold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1"
+                            data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!"
+                        data-list-view="less">View Less<span class="fas fa-angle-right ms-1"
+                            data-fa-transform="down-1"></span></a>
+                </div>
+                <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span
+                            class="fas fa-chevron-left"></span></button>
+                    <ul class="mb-0 pagination"></ul><button class="page-link pe-0" data-list-pagination="next"><span
+                            class="fas fa-chevron-right"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,466 @@
+{% extends 'staff/staff_navbar.html' %}
+{% block content %}
+{% load static %}
+<style>
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .blink {
+        animation: blink 1s infinite;
+    }
+</style>
+
+<div class="content">
+
+    <div class="mb-9">
+        <div id="projectSummary"
+            data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'>
+            <div class="row mb-4 gx-6 gy-3 align-items-center">
+                <div class="col-auto">
+                    <h2 class="mb-0">Tasks</h2>
+                </div>
+                <div class="col-auto">
+                    <div class="d-flex flex-wrap gap-2"><button class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#verticallyCentered"><span class="fas fa-plus me-2"></span>Add
+                            Task</button>
+                        <!-- <button
+                            class="btn btn-phoenix-primary"><span class="fas fa-pencil me-2"></span>Edit</button><button
+                            class="btn btn-phoenix-secondary text-900"><span
+                                class="fa-solid fa-file-export fs--1 me-2"></span>Export</button> -->
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="verticallyCentered" tabindex="-1"
+                    aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="verticallyCenteredModalLabel">Add Task</h5><button
+                                    class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                                        class="fas fa-times fs--1"></span></button>
+                            </div>
+                            <form action="{% url 'staffadd_staff_task' i.id %}" method="post"
+                                enctype="multipart/form-data" class="form-control">
+                                {% csrf_token %}
+                                <div class="modal-body">
+
+                                    <div class="mb-3 row">
+
+
+
+                                        <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Task</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control mb-2" id="inputPassword" type="text"
+                                                name="task" />
+                                        </div>
+                                        <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Links</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control mb-2" id="inputPassword" type="text"
+                                                name="task_link" />
+                                        </div>
+                                        <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Task
+                                            Files</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control mb-2" id="inputPassword" type="file"
+                                                name="task_file" />
+                                        </div>
+                                        <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Start
+                                            Date</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control mb-2" id="inputPassword" type="date"
+                                                name="task_start_date" />
+
+
+                                        </div>
+                                        <label class="col-sm-4 col-form-label mb-2" for="inputPassword">End Date</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control mb-2" id="inputPassword" type="date"
+                                                name="task_end_date" />
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer"><button class="btn btn-primary" type="submit">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <div class="row g-3 justify-content-between align-items-end mb-4">
+                <div class="col-12 col-sm-auto">
+                    <ul class="nav nav-links mx-n2">
+                        <li class="nav-item"><a class="nav-link px-2 py-1 active" aria-current="page"
+                                href="javascript:window.location.reload();">All<span
+                                    class="text-700 fw-semi-bold">({{total}})</span></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 py-1"
+                                onclick="filterByDesignation('ongoing')">Ongoing<span
+                                    class="text-700 fw-semi-bold">({{ongoing_count}})</span></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 py-1"
+                                onclick="filterByDesignation('pending')">Pending<span
+                                    class="text-700 fw-semi-bold">({{pendign_count}})</span></a></li>
+                        <li class="nav-item"><a class="nav-link px-2 py-1" href="#"
+                                onclick="filterByDesignation('cancelled')">Cancelled<span
+                                    class="text-700 fw-semi-bold">({{cancelled_count}})</span></a></li>
+                        <li class="nav-item"><a class="nav-link px-2 py-1" href="#"
+                                onclick="filterByDesignation('completed')">Finished<span
+                                    class="text-700 fw-semi-bold">({{completed_count}})</span></a></li>
+                        <li class="nav-item"><a class="nav-link px-2 py-1" href="#"
+                                onclick="filterByDesignation('postponded')">Postponed<span
+                                    class="text-700 fw-semi-bold">({{postpond_count}})</span></a></li>
+                    </ul>
+
+
+
+
+                </div>
+                <div class="col-12 col-sm-auto">
+                    <div class="d-flex align-items-center">
+                        <div class="search-box me-3">
+                            <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input
+                                    class="form-control search-input search" type="search" placeholder="Search.."
+                                    aria-label="Search" />
+                                <span class="fas fa-search search-box-icon"></span>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive scrollbar">
+                <table class="table fs--1 mb-0 border-top border-200">
+                    <thead>
+                        <tr>
+                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="projectName"
+                                style="width:30%;">TASK NAME</th>
+                            <!-- <th class="sort align-middle ps-3" scope="col" data-sort="assigness" style="width:10%;"> ASSIGNESS</th> -->
+                            <th class="sort align-middle ps-3" scope="col" data-sort="start" style="width:10%;">START
+                                DATE</th>
+                            <th class="sort align-middle ps-3" scope="col" data-sort="deadline" style="width:10%;">
+                                DEADLINE</th>
+                            <th class="sort align-middle ps-3" scope="col" data-sort="task" style="width:12%;">TASK
+                                LATEST REPORT</th>
+                            <th class="sort align-middle ps-3" scope="col" data-sort="projectprogress"
+                                style="width:8%;">PROGRESS</th>
+                            <th class="sort align-middle ps-3" scope="col" data-sort="statuses" style="width:12%;">
+                                STATUS</th>
+                            <th class="sort align-middle text-end" scope="col" data-sort="statuses" style="width:10%;">
+                                ACTION</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="list" id="project-list-table-body">
+                        {% for t in tasks reversed %}
+                        <tr class="position-static" data-designation="{{t.task_status}}">
+                            <td class="align-middle time white-space-nowrap ps-0 projectName py-4 fs-1 fw-semi-bold">
+                                <a href="{% url 'staff_task_view' t.id %}" class="text-decoration-none text-dark">
+                                    {{t.task_name}}
+                                </a>
+                            </td>
+                            <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <p class="mb-0 fs--1 text-900">{{t.start_date}}</p>
+                            </td>
+
+
+                            <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                {% if t.task_status == 'pending' %}
+                                <p class="mb-0 fs--1 text-900 text-danger" id="enddate">{{t.end_date}}</p>
+                                {% else %}
+                                <p class="mb-0 fs--1 text-900" id="enddate">{{t.end_date}}</p>
+                                {% endif %}
+
+
+
+                            </td>
+                            <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                <p class="fw-bo text-900 fs--1 mb-0">{{t.task_progress_reports}}</p>
+                            </td>
+                            <td class="align-middle white-space-nowrap ps-3 py-4">
+                                <p class="text-800 fs--2 mb-0">{{t.task_progress}} / 100</p>
+                                <div class="progress" style="height:3px;">
+
+                                    {% if t.task_progress == '100' %}
+                                    <div class="progress-bar bg-success" style="width: {{t.task_progress}}%"
+                                        role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    {% elif t.task_progress >= '75' %}
+                                    <div class="progress-bar "
+                                        style="background-color: rgb(62, 188, 87);width: {{t.task_progress}}%"
+                                        role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    {% elif t.task_progress >= '50' %}
+                                    <div class="progress-bar bg-warning" style="width: {{t.task_progress}}%"
+                                        role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    {% elif t.task_progress >= '25' %}
+                                    <div class="progress-bar"
+                                        style="background-color: rgb(255, 51, 0);width: {{t.task_progress}}%"
+                                        role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    {% elif t.task_progress >= '10' %}
+                                    <div class="progress-bar bg-primary" style="width: {{t.task_progress}}%"
+                                        role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    {% elif t.task_progress == '-100' %}
+                                    <div class="progress-bar bg-danger" style="width:100%" role="progressbar"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    {% else %}
+                                    <div class="progress-bar bg-secondary" style="width:5%" role="progressbar"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    {% endif %}
+
+                                </div>
+                            </td>
+                            <td class="align-middle white-space-nowrap statuses">
+                                {% if t.task_progress == '100' %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Completed</span>
+                                {% elif t.task_progress == '-100' %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
+                                {% elif t.task_progress >= '1' %}
+                                {% if t.task_status == 'pending' %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-danger blink">PENDING</span>
+                                {% else %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-primary">ONGOING</span>
+                                {% endif %}
+
+                                {% else %}
+                                <span class=" badge badge-phoenix fs--2 badge-phoenix-warning">Accept</span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td class="align-middle white-space-nowrap text-end statuses">
+
+                                {% if t.task_status == '0' %}
+                                <a href="{% url 'staff_work_accept' t.id %}" class="text-decoration-none">
+                                    <button class="btn btn-sm btn-outline-primary me-1 mb-1" type="button">Doing This
+                                        Task</button>
+                                </a>
+                                {% elif t.task_status == 'ongoing' or t.task_status == 'pending'%}
+
+                                <div class="cancelHiddenbtns" id="cancelHiddenbtn-{{t.id}}">
+
+                                    <a class="text-decoration-none fw-bold fs-0" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop-{{t.id}}">
+                                        <button class="btn btn-sm btn-outline-primary me-1 mb-1" type="button">Task
+                                            Report</button>
+                                    </a>
+                                    <a href="{% url 'satff_task_edit' t.id %}" class="text-decoration-none">
+                                        <button class="btn btn-sm btn-outline-warning me-1 mb-1"
+                                            type="button">Edit</button>
+                                    </a>
+
+
+                                    <a class="text-decoration-none">
+                                        <button class="btn btn-sm btn-outline-danger me-1 mb-1"
+                                            onclick="cancelFrom({{t.id}})" type="button">Cancelled</button>
+                                    </a>
+                                </div>
+                                <div id="cancelform-{{t.id}}" hidden>
+                                    <form action="{% url 'staff_task_cancelled' t.id %}" enctype="multipart/form-data" class="form" method="post">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                        <div class="col-9">
+                                             <input type="text" class="form-control" id="myInputtext" required name="myInputtext">
+                                            
+                                        </div>
+                                        <div class="col-3">
+                                            <button class="btn btn-outline-primary btn-sm" type="submit">Submit</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+
+
+
+
+                                {% elif t.task_progress == '-100' %}
+                                <a href="" class="text-decoration-none">
+                                    <button class="btn btn-sm btn-outline-danger me-1 mb-1" type="button">Reason
+                                        Report</button>
+
+                                </a>
+
+
+
+                                {% elif t.task_progress == '100' %}
+                                <a href="" class="text-decoration-none">
+                                    <button class="btn btn-sm btn-outline-success me-1 mb-1" type="button">Completed
+                                        Report</button>
+                                </a>
+                                <a href="" class="text-decoration-none">
+                                    <button class="btn btn-sm btn-outline-warning me-1 mb-1"
+                                        type="button">Updation</button>
+                                </a>
+                                {% endif %}
+
+
+
+                                <!-- <a href="" class="text-decoration-none">
+                                        <button class="btn btn-sm btn-outline-primary me-1 mb-1" type="button">Report</button>
+                                    </a>
+                                    <a href="" class="text-decoration-none">
+                                        <button class="btn btn-sm btn-outline-warning me-1 mb-1" type="button">Edit</button>
+                                    </a>
+                                    <a href="" class="text-decoration-none">
+                                        <button class="btn btn-sm btn-outline-danger me-1 mb-1" type="button">Delete</button>
+                                    </a> -->
+                            </td>
+
+
+
+                        </tr>
+
+                        <div class="modal fade" id="staticBackdrop-{{t.id}}" tabindex="-1" data-bs-backdrop="static"
+                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-secondary">
+                                        <h5 class="modal-title text-white" id="staticBackdropLabel">{{t.task_name}}</h5>
+                                        <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                                            aria-label="Close"><span
+                                                class="fas fa-times fs--1 text-white"></span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{% url 'staff_task_report' t.id %}" method="post" class="row"
+                                            enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="col">
+                                                <div class="form-floating mb-2">
+                                                    <textarea class="form-control" id="floatingInputGrid" type="text"
+                                                        name="t_r" required placeholder="Project title" rows="3"
+                                                        style="height: 90px;"></textarea><label
+                                                        for="floatingInputGrid">Task Reoprt</label>
+                                                </div>
+
+                                                <div class="form-floating mb-2">
+                                                    <input class="form-control" id="floatingInputGrid" type="number"
+                                                        name="t_p" max="100" required
+                                                        placeholder="Project title" /><label
+                                                        for="floatingInputGrid">Task Progress</label>
+                                                </div>
+                                                <div class="form-floating mb-2">
+                                                    <input class="form-control" id="floatingInputGrid" type="text"
+                                                        name="t_r_l" placeholder="Project title" /><label
+                                                        for="floatingInputGrid">Task Related Links</label>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label" for="customFile">File input
+                                                        example</label>
+                                                    <input class="form-control" id="customFile" type="file"
+                                                        name="t_f" />
+                                                </div>
+
+                                            </div>
+
+                                    </div>
+                                    <div class="modal-footer"><button class="btn btn-secondary" type="submit">Submit
+                                            Report</button></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div
+                class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
+                <div class="d-flex">
+                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info"></p><a
+                        class="fw-semi-bold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1"
+                            data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!"
+                        data-list-view="less">View Less<span class="fas fa-angle-right ms-1"
+                            data-fa-transform="down-1"></span></a>
+                </div>
+                <div class="d-flex"><button class="page-link" data-list-pagination="prev"><span
+                            class="fas fa-chevron-left"></span></button>
+                    <ul class="mb-0 pagination"></ul><button class="page-link pe-0" data-list-pagination="next"><span
+                            class="fas fa-chevron-right"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    function cancelFrom(id) {
+        document.getElementById('cancelform-' + id).removeAttribute("hidden");
+        document.getElementById('cancelHiddenbtn-' + id).setAttribute('hidden', 'true');
+    }
+
+  
+
+
+
+</script>
+
+
+
+<script>
+    function filterByDesignation(designation) {
+        var tableRows = document.querySelectorAll("#project-list-table-body tr");
+
+        for (var i = 0; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            var rowDesignation = row.getAttribute("data-designation");
+
+            if (rowDesignation === designation) {
+                row.style.display = "table-row";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+
+
+<script>
+    var navLink = document.querySelector('.task-nav');
+    navLink.classList.add('coloreadder');
+  
+  </script>
+
+
+
+{% endblock %}

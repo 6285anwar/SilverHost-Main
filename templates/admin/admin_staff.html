@@ -1,0 +1,286 @@
+{% extends 'admin/admin_navbar.html' %}
+{% block content %}
+{% load static %}
+
+<div class="content">
+
+    <div class="mb-9">
+        <div class="row g-2 mb-4">
+            <div class="col-auto">
+                <h2 class="mb-0">Staff's</h2>
+            </div>
+        </div>
+        <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
+            <li class="nav-item"><a class="nav-link active" aria-current="page"  href="javascript:window.location.reload();">All <span
+                        class="text-700 fw-semi-bold">({{all}})</span></a></li>
+            {% for i in desig %}
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="filterByDesignation('{{i.designation}}')">
+                    {{i.designation}}
+                    {% if i.total_count == None %}
+                    <span class="text-700 fw-semi-bold">(0)</span>
+                    {% else %}
+                    <span class="text-700 fw-semi-bold">({{i.total_count}})</span>
+                    {% endif %}
+                </a>
+            </li>
+            {% endfor %}
+
+            <li class="nav-item add_des" onclick="addDesignation()"><a class="nav-link" href="#"> + Add Designation </a>
+            </li>
+            <li class="nav-item addDesignationinputbox" hidden>
+                <form action="{% url 'admin_desig_save' %}" method="post">
+                    {% csrf_token %}
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter your text"
+                                        name="designation" required min="3">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </li>
+
+        </ul>
+        <div id="products"
+            data-list='{"valueNames":["customer","email","total-orders","total-spent","city","last-seen","last-order"],"page":10,"pagination":true}'>
+            <div class="mb-4">
+                <div class="row g-3">
+                    <div class="col-auto">
+                        <div class="search-box">
+                            <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input
+                                    class="form-control search-input search" type="search"
+                                    placeholder="Search customers" aria-label="Search" />
+                                <span class="fas fa-search search-box-icon"></span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                        <div class="btn-group position-static" role="group">
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="col-auto"><button class="btn btn-link text-900 me-4 px-0" id="exportButton"><span
+                                class="fa-solid fa-file-export fs--1 me-2"></span>Export</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#verticallyCentered"><span class="fas fa-plus me-2"></span>Add
+                            Staff</button>
+
+                    </div>
+
+                </div>
+            </div>
+            <div
+                class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                <div class="table-responsive scrollbar-overlay mx-n1 px-1">
+                    <table class="table table-sm fs--1 mb-0">
+                        <thead>
+                            <tr>
+                                <th class="sort align-middle pe-3" scope="col" data-sort="customer">STAFF ID</th>
+                                <th class="sort align-middle pe-3" scope="col" data-sort="customer">FULLNAME</th>
+                                <th class="sort align-middle pe-3" scope="col" data-sort="email">EMAIL</th>
+                                <th class="sort align-middle text-end " scope="col" data-sort="total-orders">USERNAME
+                                </th>
+                                <th class="sort align-middle text-end ps-3" scope="col" data-sort="total-spent">PASSWORD
+                                </th>
+                                <th class="sort align-middle text-end ps-3" scope="col" data-sort="city">DESIGNATION
+                                </th>
+                                <th class="sort align-middle text-end" scope="col" data-sort="last-seen">ADDRESS</th>
+                                <th class="sort align-middle text-end pe-0" scope="col" data-sort="last-order">STATUS
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="customers-table-body">
+
+                            {% for i in staff reversed %}
+                            <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                data-designation="{{i.designation.designation}}">
+
+                                <td class="city align-middle white-space-nowrap fw-bold ps-1">{{i.employee_id}}</td>
+                                <td class="customer align-middle white-space-nowrap pe-5"><a
+                                        class="d-flex align-items-center" href="{% url 'admin_staff_view_profile' i.id %}">
+                                        <div class="avatar avatar-m"><img class="rounded-circle" src="{{i.photo.url}}"
+                                                alt="" /></div>
+                                        <p class="mb-0 ms-3 text-1100 fw-bold">{{i.fullname}}</p>
+                                    </a></td>
+                                <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold"
+                                        href="mailto:{{i.email}}">{{i.email}}</a></td>
+                                <td
+                                    class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
+                                    {{i.username}}</td>
+                                <td
+                                    class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
+                                    {{i.password}}</td>
+                                <td
+                                    class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
+                                    {{i.designation.designation}}</td>
+                                <td
+                                    class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
+                                    {{i.address}}</td>
+                                <td
+                                    class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
+                                    {% if i.status == '0' %}
+                                    <span class="badge badge-phoenix badge-phoenix-warning">Waiting</span>
+                                    {% elif i.status == '1' %}
+                                    <span class="badge badge-phoenix badge-phoenix-success">Active</span>
+                                    {% else %}
+                                    <span class="badge badge-phoenix badge-phoenix-danger">Deleted</span>
+                                    {% endif %}
+                                </td>
+
+                            </tr>
+
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                    <div class="col-auto d-flex">
+                        <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info">
+                        </p><a class="fw-semi-bold" href="#!" data-list-view="*">View all<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                            class="fw-semi-bold d-none" href="#!" data-list-view="less">View Less<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                    </div>
+                    <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span
+                                class="fas fa-chevron-left"></span></button>
+                        <ul class="mb-0 pagination"></ul><button class="page-link pe-0"
+                            data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="modal fade" id="verticallyCentered" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="verticallyCenteredModalLabel">Send Form to Staff</h5><button class="btn p-1"
+                    type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                        class="fas fa-times fs--1"></span></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'admin_staff_email_registration' %}" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-form-name">Name</label>
+                        <input class="form-control" id="basic-form-name" type="text" placeholder="Name" name="fullname"
+                            required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-form-name">Designation</label>
+                        <select name="desig" id="" class="form-slect form-control" required>
+                            <option value="" selected>Select Designation</option>
+                            {% for i in desig %}
+
+                            <option value="{{i.id}}">{{i.designation}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-form-email">Email address</label>
+                        <input class="form-control" id="basic-form-email" type="email" placeholder="name@example.com"
+                            required name="email" />
+                    </div>
+                    <div class="model-footer">
+
+                        <button class="btn btn-primary" type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    function addDesignation() {
+        var inputBox = document.querySelector('.addDesignationinputbox');
+        var add_des = document.querySelector('.add_des');
+
+        if (inputBox.hidden) {
+            inputBox.hidden = false;
+            add_des.hidden = true;
+        } else {
+            inputBox.hidden = true;
+        }
+    }
+</script>
+<script>
+    function filterByDesignation(designation) {
+        var tableRows = document.querySelectorAll("#customers-table-body tr");
+
+        for (var i = 0; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            var rowDesignation = row.getAttribute("data-designation");
+
+            if (rowDesignation === designation) {
+                row.style.display = "table-row";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+    document.getElementById("exportButton").addEventListener("click", function() {
+      var table = document.querySelector("table");
+      var workbook = XLSX.utils.book_new();
+      var worksheet = XLSX.utils.table_to_sheet(table);
+
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+  
+      // Convert the workbook to a binary Excel file
+      var excelData = XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+  
+      // Create a Blob object from the binary Excel data
+      var blob = new Blob([s2ab(excelData)], { type: "application/octet-stream" });
+  
+      // Create a download link element
+      var downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = "table_data.xlsx";
+  
+      // Simulate a click on the download link to trigger the download
+      downloadLink.click();
+  
+      // Convert a string to an ArrayBuffer
+      function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) {
+          view[i] = s.charCodeAt(i) & 0xff;
+        }
+        return buf;
+      }
+    });
+  </script>
+
+  
+  
+  
+  
+  
+
+{% endblock %}

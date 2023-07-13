@@ -1,0 +1,92 @@
+{% extends 'admin/admin_navbar.html' %}
+{% block content %}
+{% load static %}
+
+<div class="content">
+
+    <h2 class="mb-4">Create a project</h2>
+    <div class="row">
+        <div class="col-xl-9">
+            <form class="row g-3 mb-6">
+
+                <div class="col-sm-6 col-md-8">
+                    <div class="form-floating"><input class="form-control" id="floatingInputGrid" type="text"
+                            placeholder="Project title" /><label for="floatingInputGrid">Project title</label></div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating"><select class="form-select" id="floatingSelectTask">
+                            <option selected="selected">staff 1</option>
+                            <option value="1">technical</option>
+                            <option value="2">external</option>
+                            <option value="3">organizational</option>
+                        </select><label for="floatingSelectTask">Assign TO</label></div>
+                </div>
+
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating"><select class="form-select" id="floatingSelectTeam">
+                            <option selected="selected">Select team</option>
+                            <option value="1">Team One</option>
+                            <option value="2">Team Two</option>
+                            <option value="3">Team Three</option>
+                        </select><label for="floatingSelectTeam">Team </label></div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" id="floatingInputGrid" type="date" placeholder="Project title" />
+                        <label for="floatingInputGrid">Start Date</label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" id="floatingInputGrid" type="date" placeholder="Project title" />
+                        <label for="floatingInputGrid">Deadline</label>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-12 gy-6">
+                    <div class="form-floating"><textarea class="form-control" id="floatingProjectOverview"
+                            placeholder="Leave a comment here" style="height: 100px"></textarea><label
+                            for="floatingProjectOverview">project overview</label></div>
+                </div>
+                <div class="col-md-6 gy-6">
+                    <div class="form-floating"><select class="form-select" id="floatingSelectClient">
+                            <option selected="selected">Select client</option>
+                            <option value="1">Client One</option>
+                            <option value="2">Client Two</option>
+                            <option value="3">Client Three</option>
+                        </select><label for="floatingSelectClient">client</label></div>
+                </div>
+                <div class="col-md-6 gy-6">
+                    <div class="form-floating"><input class="form-control" id="floatingInputBudget" type="text"
+                            placeholder="Budget" /><label for="floatingInputBudget">Budget</label></div>
+                </div>
+
+                <div class="col-md-6 ">
+                    <div class="form-floating"><input class="form-control" id="floatingInputBudget" type="text"
+                            placeholder="Budget" /><label for="floatingInputBudget">URL 1</label></div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="form-floating"><input class="form-control" id="floatingInputBudget" type="text"
+                            placeholder="Budget" /><label for="floatingInputBudget">URL 2</label></div>
+                </div>
+                
+
+                <div class="col-12 gy-6">
+                    <div class="row g-3 justify-content-end">
+
+                        <div class="col-auto"><a href="{% url 'admin_project' %}"><button
+                                    class="btn btn-primary px-5 px-sm-15" type="button">Create Project</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,568 @@
+{% extends 'staff/staff_navbar.html' %}
+{% block content %}
+{% load static %}
+
+
+{% if i.attendance_status == '1' or i.attendance_status == '-1' %}
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-6 border-top border-300">
+                <div id="projectSummary"
+                    data-list='{"valueNames":["project","assigness","start","deadline","calculation","projectprogress","status","action"],"page":6,"pagination":true}'>
+                    <div class="row align-items-end justify-content-between pb-4 g-3">
+                        <div class="col-auto">
+                            <h3>Attendance</h3>
+
+                        </div>
+                    </div>
+                    <div class="table-responsive ms-n1 ps-1 scrollbar">
+                        <table class="table fs--1 mb-0 border-top border-200">
+                            <thead>
+                                <tr>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="project"
+                                        style="width:8%;">DATE</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="project"
+                                        style="width:8%;">Check-In Time</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="assigness"
+                                        style="width:15%;">TODAY WORKS</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="start" style="width:15%;">
+                                        WORK REPORTS</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="deadline"
+                                        style="width:10%;">WORK PROGRESS</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="project"
+                                        style="width:8%;">Check-Out Time</th>
+                                    <th class="sort align-items-end text-end ps-3" scope="col" data-sort="calculation"
+                                        style="width:10%;">STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list" id="project-summary-table-body">
+
+                                {% for item in attendances reversed %}
+                                <tr class="position-static">
+                                    <td class="align-middle ps-3">
+                                        <p class="fw-bold text-1100 fs--1 mb-0">
+                                            {{item.date}}
+                                        </p>
+                                    </td>
+                                    <td class="align-middle ps-3">{{item.checkin_time|time:"h:i A"}}</td>
+
+                                    <td class="align-middle ps-3">
+                                        {% if item.today_work == '0' %}
+                                        <form action="{% url 'staff_first_half_attendance' item.id %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group input-group-sm">
+                                                        <input class="form-control" id="sizingInputSm" type="text" placeholder="Works" name="t_w"  required/>
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-success btn-sm" type="submit"><i class="fas fa-arrow-circle-right "></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {% else %}
+                                        {{item.today_work}}
+                                        {% endif %}
+                                    </td>
+
+                                    <td class="align-middle ps-3">
+                                        {% if item.work_report == '0' %}
+                                        No Works Today
+                                        {% elif item.work_report == '1' %}
+                                        <form action="{% url 'staff_fullday_attendance' item.id %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group input-group-sm">
+                                                        <input class="form-control" id="sizingInputSm" type="text" placeholder="Work Reports" name="w_r"required />
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-success btn-sm" type="submit"><i class="fas fa-arrow-circle-right "></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {% else %}
+                                        {{item.work_report}}
+                                        {% endif %}
+                                    </td>
+
+
+
+                                    <td class="align-middle ps-3">
+                                        {% if item.work_progress == '0' %}
+                                        No Works Today
+                                        {% elif item.work_progress == '1' %}
+                                        <form action="{% url 'staff_fullday_attendance1' item.id %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group input-group-sm">
+                                                        <input class="form-control" id="sizingInputSm" type="Number" placeholder="Work Progress Count" name="w_p" min="10" max="100" required />
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-success btn-sm" type="submit"><i class="fas fa-arrow-circle-right "></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {% else %}
+                                        {{item.work_progress}}
+                                        {% endif %}
+                                    </td>
+
+
+                                    <td class="align-middle ps-3">{{item.checkout_time|time:"h:i A"}}</td>
+
+                                    {% if item.status == '100' %}
+                                    <td class="align-middle ps-3 text-end"><span
+                                            class="badge badge-phoenix badge-phoenix-success">Full Day</span></td>
+                                    {% elif item.status == '50' %}
+                                    <td class="align-middle ps-3 text-end"><span
+                                            class="badge badge-phoenix badge-phoenix-warning">Half Day</span></td>
+                                    {% elif item.status == '00' %}
+                                    <td class="align-middle ps-3 text-end"><span
+                                            class="badge badge-phoenix badge-phoenix-danger">Leave</span></td>
+                                    {% else %}
+                                    <td class="align-middle ps-3 text-end">
+                                        <img src="../../static/staff_nav_icons/user.gif" alt="" width="40px"></td>
+                                    {% endif %}
+
+                                </tr>
+                                {% endfor %}
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                        <div class="col-auto d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                data-list-info="data-list-info"></p><a class="fw-semi-bold" href="#!"
+                                data-list-view="*">View all<span class="fas fa-angle-right ms-1"
+                                    data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!"
+                                data-list-view="less">View Less<span class="fas fa-angle-right ms-1"
+                                    data-fa-transform="down-1"></span></a>
+                        </div>
+                        <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul><button class="page-link pe-0"
+                                data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="content">
+    <div class="d-flex " id="scrollspyForms"><span class="fa-stack me-2 ms-n1"><i
+                class="fas fa-circle fa-stack-2x text-primary"></i><i
+                class="fa-inverse fa-stack-1x text-primary-soft fas fa-file-alt"
+                data-fa-transform="shrink-2"></i></span>
+        <div class="col">
+            <h3 class="mb-0 text-primary position-relative fw-bold"><span class="bg-soft pe-2">Attendance</span><span
+                    class="border border-primary-200 position-absolute top-50 translate-middle-y w-100 start-0 z-index--1"></span>
+            </h3>
+            <p class="mb-0">You are in Offline Mode, Check Your Mode in Dashboard.</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% if i.attendance_status == '1' %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-xl-10">
+            <div class="row g-5 ">
+
+                {% if attend %}
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            {% for i in attend %}
+                            <div class="col-lg-12">
+
+                                <table class="table table-borderless mt-4">
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-2 ps-0">
+                                                <div class="d-flex"><span class="fs-5 me-2" data-feather="calendar"
+                                                        style="height:16px; width:16px;"> </span>
+                                                    <h5 class="lh-sm me-4">Date</h5>
+                                                </div>
+                                            </td>
+                                            <td class="py-2 fw-bold lh-sm">:</td>
+                                            <td class="py-2 px-3">
+                                                <h5 class="lh-sm fw-normal text-800">{{i.date}}</h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 ps-0">
+                                                <div class="d-flex"><span class="fs-5 me-2" data-feather="clock"
+                                                        style="height:16px; width:16px;"> </span>
+                                                    <h5 class="lh-sm me-4">Attend Start Time</h5>
+                                                </div>
+                                            </td>
+                                            <td class="py-2 fw-bold lh-sm">:</td>
+                                            <td class="py-2 px-3">
+                                                <h5 class="lh-lg fw-normal text-800">{{i.start_time|time:"H:i:s A"}}
+                                                </h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 ps-0">
+                                                <div class="d-flex"><span class="fs-5 me-2" data-feather="book-open"
+                                                        style="height:16px; width:16px;"> </span>
+                                                    <h5 class="lh-sm me-4">Today Work</h5>
+                                                </div>
+                                            </td>
+                                            <td class="py-2 fw-bold lh-sm">:</td>
+                                            <td class="py-2 px-3">
+                                                <h5 class="lh-sm fw-normal text-800">{{i.today_work}}</h5>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <form class="d-flex flex-column h-100" method="post"
+                                action="{% url 'staff_first_half_attendance' i.id %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row g-3 mb-2">
+
+                                    <div class="col-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Today Work</span>
+                                            <textarea class="form-control " aria-label="With textarea" required
+                                                name="t_w" aria-describedby="inputGroup-sizing-lg"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="justify-content-between align-items-end mt-3">
+                                    <div class="text-end float-end"><button class="btn btn-outline-primary fs--2"
+                                            type="submit">Start<span
+                                                class="fa-solid fa-paper-plane ms-1"></span></button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+
+
+                {% if attend %}
+                {% for ss in attend %}
+                {% if ss.status == '-100' %}
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body align-content-center text-center justify-content-center">
+                            <h3 style="color: red;">Leave</h3>
+                        </div>
+                    </div>
+                </div>
+                {% elif ss.status == '100'%}
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="col-lg-12">
+                                <table class="table table-borderless mt-4">
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-2 ps-0">
+                                                <div class="d-flex"><span class="fs-5 me-2" data-feather="clock"
+                                                        style="height:16px; width:16px;"> </span>
+                                                    <h5 class="lh-sm me-4">Work Progress</h5>
+                                                </div>
+                                            </td>
+                                            <td class="py-2 fw-bold lh-sm">:</td>
+                                            <td class="py-2 px-3">
+                                                <h5 class="lh-lg fw-normal text-800">{{ss.work_progress}}</h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 ps-0">
+                                                <div class="d-flex"><span class="fs-5 me-2" data-feather="clipboard"
+                                                        style="height:16px; width:16px;"> </span>
+                                                    <h5 class="lh-sm me-4">Work Report</h5>
+                                                </div>
+                                            </td>
+                                            <td class="py-2 fw-bold lh-sm">:</td>
+                                            <td class="py-2 px-3">
+                                                <h5 class="lh-sm fw-normal text-800">{{ss.work_report}}</h5>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <form class="d-flex flex-column h-100" method="post"
+                                action="{% url 'staff_fullday_attendance' i.id %}">
+                                {% csrf_token %}
+                                <div class="row g-3 mb-2">
+                                    <div class="col-12">
+                                        <input class="form-control" type="text" placeholder="Work Progress" name="w_p"
+                                            required />
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Work Report</span>
+                                            <textarea class="form-control" aria-label="With textarea" required
+                                                name="w_r"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="justify-content-between align-items-end">
+                                    <div class="text-end float-end">
+                                        <button class="btn btn-outline-success fs--2" type="submit">Submit
+                                            <span class="fa-solid fa-paper-plane ms-1"></span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body align-content-center text-center justify-content-center">
+                            <h5 class="mt-7">Add Today Work</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-xl-2">
+            <div class="card ">
+                <div class="card-body">
+                    <a href="{% url 'staff_leave' i.id %}">
+                        <button class="btn btn-outline-danger w-100 mb-3" type="submit">Leave<span
+                                class="fa-solid fa-paper-plane ms-1"></span></button>
+                    </a>
+
+                    <a
+                        href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=6285anwarsadik@gmail.com&su=Request for Leave of Absence &body=I hope this email finds you well. I am writing to formally request a leave of absence from [Company Name] for [duration of leave], starting from [start date] until [end date].During my absence, I will be dealing with [reason for leave, such as personal matters, medical reasons, or family emergencies]. I understand that this may cause some inconvenience and disruption to the team, and I apologize for any inconvenience caused. However, I have taken steps to minimize the impact of my absence, such as completing any pending tasks or assigning them to a colleague.">
+
+                        <button class="btn btn-outline-warning w-100 mb-3" type="submit">
+                            Apply Leave<span class="fa-solid fa-paper-plane ms-1"></span></button>
+                    </a>
+                    <button class="btn btn-outline-phoenix-warning  w-100 mb-2" type="submit">Half Day<span
+                            class="fa-solid fa-paper-plane ms-1"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="content">
+        <div class="d-flex " id="scrollspyForms"><span class="fa-stack me-2 ms-n1"><i
+                    class="fas fa-circle fa-stack-2x text-primary"></i><i
+                    class="fa-inverse fa-stack-1x text-primary-soft fas fa-file-alt"
+                    data-fa-transform="shrink-2"></i></span>
+            <div class="col">
+                <h3 class="mb-0 text-primary position-relative fw-bold"><span
+                        class="bg-soft pe-2">Attendance</span><span
+                        class="border border-primary-200 position-absolute top-50 translate-middle-y w-100 start-0 z-index--1"></span>
+                </h3>
+                <p class="mb-0">You are in Offline Mode, Check Your Mode in Dashboard.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+
+
+
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <form class="d-flex flex-column h-100" method="post"
+                    action="{% url 'staff_first_half_attendance' i.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3 mb-2">
+
+                        <div class="col-12">
+                            <div class="input-group">
+                                <span class="input-group-text">Today Work</span>
+                                <textarea class="form-control " aria-label="With textarea" required
+                                    name="t_w" aria-describedby="inputGroup-sizing-lg"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="justify-content-between align-items-end mt-3">
+                        <div class="text-end float-end"><button class="btn btn-outline-primary fs--2"
+                                type="submit">Start<span
+                                    class="fa-solid fa-paper-plane ms-1"></span></button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-6 border-top border-300">
+                <div id="projectSummary"
+                    data-list='{"valueNames":["project","assigness","start","deadline","calculation","projectprogress","status","action"],"page":6,"pagination":true}'>
+                    <div class="row align-items-end justify-content-between pb-4 g-3">
+                        <div class="col-auto">
+                            <h3>Attendance</h3>
+
+                        </div>
+                    </div>
+                    <div class="table-responsive ms-n1 ps-1 scrollbar">
+                        <table class="table fs--1 mb-0 border-top border-200">
+                            <thead>
+                                <tr>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="project" style="width:15%;">DATE</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="project" style="width:15%;">Check-in Time</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="assigness" style="width:15%;">WORK</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="start" style="width:15%;">WORK REPORT</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="deadline" style="width:15%;">WORK PROGRESS</th>
+                                    <th class="sort align-middle ps-3" scope="col" data-sort="calculation" style="width:15%;">STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list" id="project-summary-table-body">
+
+                                {% for item in attendances %}
+                                <tr class="position-static">
+                                    <td class="align-middle ps-3">
+                                        <p class="fw-bold text-1100 fs--1 mb-0">
+                                            {{item.date}}
+                                        </p>
+                                    </td>
+                                    <td class="align-middle ps-3">{{item.checkin_time|time:"h:i A"}}</td>
+                                    <td class="align-middle ps-3">{{item.today_work}}</td>
+                                    <td class="align-middle ps-3">{{item.work_report}}</td>
+                                    <td class="align-middle ps-3">{{item.work_progress}}</td>
+                                    {% if item.status == '100' %}
+                                    <td class="align-middle ps-3"><span
+                                            class="badge badge-phoenix badge-phoenix-success">Full Day</span></td>
+                                    {% elif item.status == '50' %}
+                                    <td class="align-middle ps-3"><span
+                                            class="badge badge-phoenix badge-phoenix-warning">Half Day</span></td>
+                                    {% else %}
+                                    <td class="align-middle ps-3"><span
+                                            class="badge badge-phoenix badge-phoenix-danger">Leave</span></td>
+                                    {% endif %}
+
+                                </tr>
+                                {% endfor %}
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                        <div class="col-auto d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                data-list-info="data-list-info"></p><a class="fw-semi-bold" href="#!"
+                                data-list-view="*">View all<span class="fas fa-angle-right ms-1"
+                                    data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!"
+                                data-list-view="less">View Less<span class="fas fa-angle-right ms-1"
+                                    data-fa-transform="down-1"></span></a>
+                        </div>
+                        <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul><button class="page-link pe-0"
+                                data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ -->
+
+
+ <script>
+    var navLink = document.querySelector('.attnd-nav');
+    navLink.classList.add('coloreadder');
+  
+  </script>
+
+{% endblock %}

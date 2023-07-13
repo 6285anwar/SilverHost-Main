@@ -1,0 +1,303 @@
+{% extends 'admin/admin_navbar.html' %}
+{% block content %}
+{% load static %}
+
+<div class="content">
+
+    <div class="pb-9">
+        <h2 class="mb-4">Task Assign TO Staffs</h2>
+        <div class="row g-3 justify-content-between mb-4">
+            <div class="col-auto">
+                <div class="d-flex flex-wrap gap-2"><button class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#verticallyCentered"><span class="fas fa-tasks me-2"></span>Add Task</button>
+                    <!-- <button
+                        class="btn btn-phoenix-primary"><span class="fas fa-pencil me-2"></span>Edit</button><button
+                        class="btn btn-phoenix-secondary text-900"><span
+                            class="fa-solid fa-file-export fs--1 me-2"></span>Export</button> -->
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="d-flex">
+                    <div class="search-box me-2 d-none d-xl-block">
+                        <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input
+                                class="form-control search-input search" type="search" placeholder="Search by name"
+                                aria-label="Search" />
+                            <span class="fas fa-search search-box-icon"></span>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="verticallyCentered" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="verticallyCenteredModalLabel">Assign Task to Staff</h5><button
+                            class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                                class="fas fa-times fs--1"></span></button>
+                    </div>
+                    <form action="{% url 'admin_staff_task' %}" method="post" enctype="multipart/form-data"
+                        class="form-control">
+                        {% csrf_token %}
+                        <div class="modal-body">
+
+                            <div class="mb-3 row">
+                                <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Assign To</label>
+                                <div class="col-sm-8">
+
+
+                                    <select name="staff_name" id="" class="form-select mb-2">
+                                        <option value="">Select Assigneee</option>
+                                        {% for i in staff %}
+                                        <option value="{{i.id}}">{{i.fullname}}</option>
+                                        {% endfor %}
+
+                                    </select>
+
+                                </div>
+
+
+                                <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Task</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control mb-2" id="inputPassword" type="text" name="task" />
+                                </div>
+                                <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Links</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control mb-2" id="inputPassword" type="text" name="task_link" />
+                                </div>
+                                <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Task Files</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control mb-2" id="inputPassword" type="file" name="task_file" />
+                                </div>
+                                <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Start Date</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control mb-2" id="inputPassword" type="date"
+                                        name="task_start_date" />
+
+
+                                </div>
+                                <label class="col-sm-4 col-form-label mb-2" for="inputPassword">End Date</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control mb-2" id="inputPassword" type="date"
+                                        name="task_end_date" />
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-primary" type="submit">Assign Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="col-lg-12">
+            <div class="border-top">
+                <div id="purchasersSellersTable"
+                    data-list='{"valueNames":["deals_name","deal_owner","account_name","stage","amount"],"page":10,"pagination":true}'>
+                    <div class="table-responsive scrollbar mx-n1 px-1">
+                        <table class="table table-sm fs--1 leads-table">
+                            <thead>
+                                <tr>
+
+                                    <th class="sort align-middle ps-0 pe-5 text-uppercase text-nowrap" scope="col"
+                                        data-sort="deals_name" style="min-width:250px;">Task</th>
+                                    <th class="sort align-middle ps-4 pe-5 text-uppercase text-nowrap" scope="col"
+                                        data-sort="deal_owner" style="min-width:50px;">Assign</th>
+                                    <th class="sort align-middle ps-4 pe-5 text-uppercase text-nowrap" scope="col"
+                                        data-sort="account_name" style="min-width:150px;">Start Date</th>
+                                    <th class="sort align-middle ps-4 pe-5 text-uppercase text-nowrap" scope="col"
+                                        data-sort="stage" style="min-width:160px;">End Date</th>
+                                    <th class="sort align-middle ps-4 pe-5 text-uppercase text-nowrap" scope="col"
+                                        data-sort="amount" style="min-width:200px;">Progress Report</th>
+                                    <th class="sort align-middle ps-4 pe-5 text-uppercase text-nowrap" scope="col"
+                                        data-sort="amount" style="min-width:50px;">Progress</th>
+                                    <th class="sort text-end align-middle pe-0 ps-4" scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="list" id="purchasers-sellers-body">
+
+
+
+
+
+                                {% for s in s_tasks reversed %}
+
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+
+                                    <td
+                                        class="deals_name align-middle white-space-nowrap fw-semi-bold text-1000 ps-0 py-0">
+                                        <a class="fw-bold text-primary" href="#!">{{s.task_name}}</a>
+                                    </td>
+                                    <td
+                                        class="deal_owner align-middle white-space-nowrap fw-semi-bold text-1100 ps-4 py-0">
+                                        <div class="d-flex align-items-center position-relative">
+                                            <div class="avatar avatar-m me-3"><img
+                                                    class="rounded-circle avatar-placeholder"
+                                                    src="{{s.staff.photo.url}}" alt="" /></div><a
+                                                class="text-1000 fw-bold stretched-link" href="#!">{{s.staff}}</a>
+                                        </div>
+                                    </td>
+
+                                    <td
+                                        class="account_name align-middle white-space-nowrap ps-4 fw-semi-bold text-900 py-0">
+                                        {{s.start_date}}</td>
+                                    <td
+                                        class="account_name align-middle white-space-nowrap ps-4 fw-semi-bold text-900 py-0">
+                                        {{s.end_date}}</td>
+
+                                    <td
+                                        class="account_name align-middle white-space-nowrap ps-4 fw-semi-bold text-900 py-0 w-25">
+                                        {{s.task_progress_reports}}
+                                    </td>
+
+                                    <td class="stage align-middle white-space-nowrap fw-bold text-900 py-0">
+                                        <div class="d-flex align-items-center gap-3">
+
+
+                                            {% if s.task_status == '0' %}
+
+                                            <div style="--phoenix-circle-progress-bar:100">
+                                                <svg class="circle-progress-svg" width="54" height="54"
+                                                    viewBox="0 0 170 170">
+                                                    <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke-width="12"></circle>
+                                                    <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke="#ffcc00" stroke-width="12">
+                                                    </circle>
+                                                </svg>
+                                            </div>
+
+                                            <h6 class="mb-0 text-900">Waiting</h6>
+
+                                            {% elif s.task_status == 'ongoing' %}
+                                            <div style="--phoenix-circle-progress-bar:1">
+                                                <svg class="circle-progress-svg" width="54" height="54"
+                                                    viewBox="0 0 170 170">
+                                                    <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke-width="12"></circle>
+                                                    <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke="#904bc9" stroke-width="12">
+                                                    </circle>
+                                                </svg>
+                                            </div>
+                                            <h6 class="mb-0 text-900">Ongoing</h6>
+
+
+                                            
+                                            {% elif s.task_status == 'cancelled' %}
+                                            <div style="--phoenix-circle-progress-bar:100">
+                                                <svg class="circle-progress-svg" width="54" height="54"
+                                                    viewBox="0 0 170 170">
+                                                    <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke-width="12"></circle>
+                                                    <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke="#ff0000" stroke-width="12">
+                                                    </circle>
+                                                </svg>
+                                            </div>
+                                            <h6 class="mb-0 text-900">Rejected</h6>
+
+                                            {% elif s.task_status == 'completed' %}
+                                            <div style="--phoenix-circle-progress-bar:100">
+                                                <svg class="circle-progress-svg" width="54" height="54"
+                                                    viewBox="0 0 170 170">
+                                                    <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke-width="12"></circle>
+                                                    <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke="#21b029" stroke-width="12">
+                                                    </circle>
+                                                </svg>
+                                            </div>
+
+                                            <h6 class="mb-0 text-900">Completed</h6>
+                                            {% else %}
+                                            <div style="--phoenix-circle-progress-bar:100">
+                                                <svg class="circle-progress-svg" width="54" height="54"
+                                                    viewBox="0 0 170 170">
+                                                    <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke-width="12"></circle>
+                                                    <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none"
+                                                        stroke-linecap="round" stroke="#000000" stroke-width="12">
+                                                    </circle>
+                                                </svg>
+                                            </div>
+                                            <h6 class="mb-0 text-900">Deleted</h6>
+                                            {% endif %}
+
+
+
+                                        </div>
+                                    </td>
+
+
+
+
+
+
+                                    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+                                        <div class="font-sans-serif btn-reveal-trigger position-static"><button
+                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                type="button" data-bs-toggle="dropdown" data-boundary="window"
+                                                aria-haspopup="true" aria-expanded="false"
+                                                data-bs-reference="parent"><span
+                                                    class="fas fa-ellipsis-h fs--2"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
+                                                    href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger"
+                                                    href="#!">Remove</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                {% endfor %}
+
+
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center justify-content-between pe-0 fs--1">
+                        <div class="col-auto d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                data-list-info="data-list-info"></p><a class="fw-semi-bold" href="#!"
+                                data-list-view="*">View all<span class="fas fa-angle-right ms-1"
+                                    data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!"
+                                data-list-view="less">View Less<span class="fas fa-angle-right ms-1"
+                                    data-fa-transform="down-1"></span></a>
+                        </div>
+                        <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul><button class="page-link pe-0"
+                                data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

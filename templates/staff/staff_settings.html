@@ -1,0 +1,113 @@
+{% extends 'staff/staff_navbar.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="content">
+    <div class="mb-9">
+        <div class="row g-6">
+            <div class="col-12 col-lg-6">
+                hi
+            </div>
+
+
+
+
+
+            <div class="col-12 col-lg-6">
+                <div class="card" style="background-color: rgba(255, 255, 255, 0);">
+                    <div class="card-body">
+
+                        <h3 class="mb-2">Edit Profile</h3>
+                        <form class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label" for="inputEmail4">Full NAme</label>
+                                <input class="form-control" id="inputEmail4" type="text" value="{{i.fullname}}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="inputPassword4">Father Name</label>
+                                <input class="form-control" id="inputPassword4" type="text" value="{{i.fathername}}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="inputPassword4">Mother Name</label>
+                                <input class="form-control" id="inputPassword4" type="text" value="{{i.mothername}}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="inputEmail4">Email</label>
+                                <input class="form-control" id="inputEmail4" type="text" value="{{i.email}}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="inputPassword4">Phone Number</label>
+                                <input class="form-control" id="inputPassword4" type="text" value="{{i.mobile}}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="inputPassword4">Alternative Number</label>
+                                <input class="form-control" id="inputPassword4" type="text" value="{{i.alternativeno}}">
+                            </div>
+
+
+
+
+                            <div class="col-4">
+                                <label class="form-label" for="inputAddress">Address</label>
+                                <input class="form-control" id="inputAddress" type="text" value="{{i.address}}">
+                            </div>
+                            <div class="col-3">
+                                <label class="form-label" for="inputAddress">District</label>
+                                <input class="form-control" id="inputAddress" type="text" value="{{i.district}}">
+                            </div>
+                            <div class="col-3">
+                                <label class="form-label" for="inputAddress">State</label>
+                                <input class="form-control" id="inputAddress" type="text" value="{{i.state}}">
+                            </div>
+                            <div class="col-2">
+                                <label class="form-label" for="inputAddress">Country</label>
+                                <input class="form-control" id="inputAddress" type="text" value="{{i.country}}">
+                            </div>
+
+<!-- 
+    <div class="col-12">
+                                <label class="form-label" for="inputAddress2">Address 2</label>
+                                <input class="form-control" id="inputAddress2" type="text"
+                                    placeholder="Apartment, studio, or floor">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="inputCity">City</label>
+                                <input class="form-control" id="inputCity" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="inputState">State</label>
+                                <select class="form-select" id="inputState">
+                                    <option selected="selected">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="inputZip">Zip</label>
+                                <input class="form-control" id="inputZip" type="text">
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="gridCheck" type="checkbox">
+                                    <label class="form-check-label" for="gridCheck">Check me out</label>
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Edit</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var navLink = document.querySelector('.sett-nav');
+    navLink.classList.add('coloreadder');
+
+</script>
+
+{% endblock %}

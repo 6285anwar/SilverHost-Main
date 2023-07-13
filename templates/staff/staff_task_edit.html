@@ -1,0 +1,54 @@
+{% extends 'staff/staff_navbar.html' %}
+{% block content %}
+{% load static %}
+
+<div class="content">
+    <div class="d-flex justify-content-center mb-2">
+
+        <div class="card w-30">
+            <div class="card-header">
+                <h4>Edit Task</h4>
+            </div>
+            <div class="card-content">
+
+                <form action="{% url 'staff_task_edit_save' tasks1.id %}" method="post" enctype="multipart/form-data"
+                    class="form-control">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Task</label>
+                            <div class="col-sm-8">
+                                <input class="form-control mb-2" id="inputPassword" type="text" name="task"
+                                    placeholder="{{tasks1.task_name}}" value="{{tasks1.task_name}}"/>
+                            </div>
+                            <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Links</label>
+                            <div class="col-sm-8">
+                                <input class="form-control mb-2" id="inputPassword" type="text" name="task_link"
+                                    placeholder="{{tasks1.task_links}}" value="{{tasks1.task_links}}"/>
+                            </div>
+                            <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Task
+                                Files</label>
+                            <div class="col-sm-8">
+                                <input class="form-control mb-2" id="inputPassword" type="file" name="task_file"
+                                    placeholder="{{tasks1.task_file}}" value="{{tasks1.task_file.url}}" />
+                            </div>
+                            <label class="col-sm-4 col-form-label mb-2" for="inputPassword">Start Date</label>
+                            <div class="col-sm-8">
+                                <input class="form-control mb-2" id="inputPassword" type="date"
+                                    name="task_start_date" />
+                            </div>
+                            <label class="col-sm-4 col-form-label mb-2" for="inputPassword">End Date</label>
+                            <div class="col-sm-8">
+                                <input class="form-control mb-2" id="inputPassword" type="date" name="task_end_date" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer"><button class="btn btn-outline-primary" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

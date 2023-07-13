@@ -1,0 +1,185 @@
+{% extends 'staff/staff_navbar.html' %}
+{% block content %}
+{% load static %}
+
+<div class="content">
+    {% for t in tasks %}
+      
+
+    <div class="mb-9">
+        <div class="row g-0">
+            <div class="col-12 col-xxl-8 px-0 bg-soft">
+                <div class="px-4 px-lg-6 pt-6 pb-9">
+                    <div class="mb-5">
+                        <div class="d-flex justify-content-between">
+                            <h2 class="text-black fw-bolder mb-2">{{t.task_name}}</h2>
+                            <div class="font-sans-serif btn-reveal-trigger"><button
+                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal"
+                                    type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
+                                    aria-expanded="false" data-bs-reference="parent"><span
+                                        class="fas fa-ellipsis-h"></span></button>
+                                
+                            </div>
+                        </div>
+
+                        {% if t.task_status == 'completed' %}
+                        <span class="badge badge-phoenix badge-phoenix-success">Completed<span
+                            class="ms-1 uil uil-check"></span></span>
+                            {% elif t.task_status == 'ongoing' %}
+                            <span class="badge badge-phoenix badge-phoenix-primary">Ongoing<span
+                                class="ms-1 uil uil-stopwatch"></span></span>
+                                {% elif t.task_status == 'cancelled' %}
+                            <span class="badge badge-phoenix badge-phoenix-danger">Cancelled<span
+                                class="ms-1 uil uil-stopwatch"></span></span>
+
+                                <h5 class="mt-3">
+                                    Reason For Cancellation : <span>{{t.task_cancel_report}}</span>
+                                </h5>
+                                {% elif t.task_status == 'pending' %}
+                                <span class="badge badge-phoenix badge-phoenix-danger">Pending<span
+                                    class="ms-1 uil uil-stopwatch"></span></span>
+                                {% else %}
+                                <span class="badge badge-phoenix badge-phoenix-warning">Waiting For Accept<span
+                                    class="ms-1 uil uil-stopwatch"></span></span>
+                        {% endif %}
+                    </div>
+                    <div class="row gx-0 gx-sm-5 gy-8 mb-8">
+                        <div class="col-12 col-xl-3 col-xxl-4 pe-xl-0">
+                            <div class="mb-4 mb-xl-7">
+                                <div class="row gx-0 gx-sm-7">
+                                    <!-- <div class="col-12 col-sm-auto">
+                                        <table class="lh-sm mb-4 mb-sm-0 mb-xl-4">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="py-1" colspan="2">
+                                                        <div class="d-flex"><span
+                                                                class="fa-solid fa-earth-americas me-2 text-700 fs--1"></span>
+                                                            <h5 class="text-900">Public project</h5>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top py-1">
+                                                        <div class="d-flex"><span
+                                                                class="fa-solid fa-user me-2 text-700 fs--1"></span>
+                                                            <h5 class="text-900 mb-0 text-nowrap">Client :</h5>
+                                                        </div>
+                                                    </td>
+                                                    <td class="ps-1 py-1"><a class="fw-semi-bold d-block lh-sm"
+                                                            href="#!">Gobble the Bleep Inc</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top py-1">
+                                                        <div class="d-flex"><span
+                                                                class="fa-regular fa-credit-card me-2 text-700 fs--1"></span>
+                                                            <h5 class="text-900 mb-0 text-nowrap">Budget : </h5>
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold ps-1 py-1 text-1000">$8,742</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div> -->
+                                    <div class="col-12 col-sm-auto">
+                                        <table class="lh-sm">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-top py-1 text-900 text-nowrap fw-bold">Started :
+                                                    </td>
+                                                    <td class="text-600 fw-semi-bold ps-3">{{t.start_date}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top py-1 text-900 text-nowrap fw-bold">Deadline :
+                                                    </td>
+                                                    <td class="text-600 fw-semi-bold ps-3">{{t.end_date}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top py-1 text-900 text-nowrap fw-bold">Progress :
+                                                    </td>
+                                                    <td class="text-warning fw-semi-bold ps-3">{{t.task_progress}}%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top py-1 text-900 text-nowrap fw-bold">Related Link :
+                                                    </td>
+                                                    <td class="text-primary fw-semi-bold ps-3"><a href="{{t.task_links}}">{{t.task_links}}</a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    <!-- <h3 class="text-1100 mb-4">Project overview</h3>
+                    <p class="text-800 mb-4">The new redirection team is happy to announce that we’ve fixed all our
+                        unresponsive URLs and redirected them to new URLs. The tremendous assistance from our support
+                        team and the dev team, as well as that of the team lead’s, this team has made an impossible
+                        possible within a week. They didn’t stop for a moment, and we got our pages working again for
+                        all the valuable users. </p>
+                    <p class="text-800 mb-0">Join us in celebrating the massive success of data transferring and getting
+                        us a huge revenue by eating out. Free public viewing and a buffet is offered for the great team
+                        as well as for the other teams working with us. We’ll be checking out places for the best option
+                        available at hands and we’ll let you know the schedule once we decide on one.<a
+                            class="fw-semi-bold" href="#!">read more </a></p> -->
+                </div>
+            </div>
+            <div class="col-12 col-xxl-4 px-0 border-start-xxl border-300 border-top-sm">
+                <div class="h-100">
+                    <div class="bg-light dark__bg-1100 h-100">
+                        <div class="p-4 p-lg-6">
+                            <h3 class="text-1000 mb-4 fw-bold">Recent Reports</h3>
+                            <div class="timeline-vertical timeline-with-details">
+
+                                {% for tr in tasksReports reversed %}
+                                <div class="timeline-item position-relative mt-3">
+                                    <div class="row g-md-3">
+                                        <div class="col-12 col-md-auto d-flex">
+                                            <div class="timeline-item-date order-1 order-md-0 me-md-4">
+                                                <p class="fs--2 fw-semi-bold text-600 text-end">{{tr.report_date}}</p>
+                                            </div>
+                                            <div class="timeline-item-bar position-md-relative me-3 me-md-0 border-400">
+                                                <div
+                                                    class="icon-item icon-item-sm rounded-7 shadow-none bg-primary-100">
+                                                    <span
+                                                        class="fa-solid fa-chess text-primary-600 fs--2 dark__text-primary-300"></span>
+                                                </div>
+                                                <span
+                                                    class="timeline-bar border-end border-dashed border-400"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="timeline-item-content ps-6 ps-md-3">
+                                                <h5 class="fs--1 lh-sm">{{tr.report}}</h5>
+                                                <div class="card" style="background-color: rgba(255, 0, 0, 0);" >
+                                                    <div class="card-body">
+                                                        <p class="fs--1 text-800 mb-5"><img src="{{tr.report_file.url}}" alt="" width="50%"></p>
+                                                    </div>
+                                                </div>
+                                                
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+{% endblock %}

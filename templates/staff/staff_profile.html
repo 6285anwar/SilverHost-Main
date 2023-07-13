@@ -1,0 +1,236 @@
+{% extends 'staff/staff_navbar.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="content">
+
+    <div class="pb-15">
+        <div class="card cover-image mb-5">
+            <div class="card-header hover-actions-trigger d-flex justify-content-center align-items-end position-relative mb-7 mb-xxl-0"
+                style="min-height: 214px; ">
+                <div class="bg-holder" style="background-image:url(../../static/images/cover-photo.png);"></div>
+                <input class="d-none" id="upload-cover-image" type="file" /><label class="cover-image-file-input"
+                    for="upload-cover-image"></label>
+                <div class="hover-actions end-0 bottom-0 pe-1 pb-2 text-white"><span
+                        class="fa-solid fa-camera me-2 overlay-icon"></span></div>
+                <!--/.bg-holder-->
+                <input class="d-none" id="upload-porfile-picture" type="file" /><label
+                    class="avatar avatar-5xl feed-profile cursor-pointer" for="upload-porfile-picture"><img
+                        class="rounded-circle bg-white img-thumbnail shadow-sm" src="{{i.photo.url}}" width="100"
+                        height="100" alt="" /></label>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-xl-between">
+                    <div class="col-auto">
+                        <div class="d-flex flex-wrap mb-3 align-items-center">
+                            <h2 class="me-2">{{i.fullname}}</h2><span
+                                class="fw-semi-bold fs-1 text-1100">{{i.designation.designation}}</span>
+                        </div>
+                        <div class="mb-5">
+                            <div class="d-md-flex align-items-center">
+
+                                <div class="d-flex align-items-center"><span
+                                        class="fa-solid fas fa-calendar-alt fs--1 text-700 me-2 me-lg-1 me-xl-2"></span><a
+                                        class="text-decoration-none" href="#!"><span
+                                            class="fs-1 fw-bold text-600 hover-text-1100"><span
+                                                class="fw-semi-bold ms-1 me-4">{{i.dateofbirth}}</span></span></a></div>
+
+
+                                <div class="d-flex align-items-center"><span
+                                        class="fa-solid fas fa-mail-bulk fs--1 text-700 me-2 me-lg-1 me-xl-2"></span><a
+                                        class="text-decoration-none" href="#!"><span
+                                            class="fs-1 fw-bold text-600 hover-text-1100"> <span
+                                                class="fw-semi-bold ms-1 me-4">{{i.email}}</span></span></a></div>
+
+                                <div class="d-flex align-items-center"><span
+                                        class="fa-solid fa-location-dot fs--1 text-700 me-2 me-lg-1 me-xl-2"></span><a
+                                        class="text-decoration-none" href="#!"><span
+                                            class="fs-1 fw-semi-bold text-600 hover-text-1100">{{i.address}},{{i.district}}-{{i.state}}
+                                        </span></a></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row gy-3 gx-5 gx-xxl-6">
+
+            <div class="row justify-content-between">
+
+                <div class="col-lg-6 col-xl-6">
+                    <div class="container">
+                        <table class="table table-borderless mt-4">
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="user"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Gender</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">:</td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800 text-capitalize">{{i.gender}}</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="home"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Address</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">:</td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-lg fw-normal text-800">{{i.address}}, {{i.district}}, {{i.state}}<br>
+                                            {{i.country}}, {{i.pincode}}</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="user"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Father Name</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">: </td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800">{{i.fathername}}</h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="user"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Mother Name</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">: </td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800">{{i.mothername}}</h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="phone"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Phone Number</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">: </td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800">{{i.mobile}}</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="phone"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Phone Number 2</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">: </td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800">{{i.alternativeno}}</h5>
+                                    </td>
+                                </tr>
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-6 col-xl-6">
+                    <div class="container">
+                        <table class="table table-borderless mt-4">
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="user"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Username</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">:</td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800">{{i.username}}</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="lock"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Password</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">:</td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800">{{i.password}}</h5>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="calendar"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Join Date</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">:</td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800">{{i.joiningdate}}</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 ps-0">
+                                        <div class="d-flex"><span class="fs-5 me-2" data-feather="credit-card"
+                                                style="height:16px; width:16px;"> </span>
+                                            <h5 class="lh-sm me-4">Aadhar Number</h5>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 fw-bold lh-sm">:</td>
+                                    <td class="py-2 px-3">
+                                        <h5 class="lh-sm fw-normal text-800">{{i.aadhar_no}}</h5>
+                                    </td>
+                                </tr>
+
+
+
+
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    var navLink = document.querySelector('.pro-nav');
+    navLink.classList.add('coloreadder');
+
+</script>
+{% endblock %}

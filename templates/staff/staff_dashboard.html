@@ -1,0 +1,987 @@
+{% extends 'staff/staff_navbar.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="content">
+    <div class="mb-9">
+        <div class="row">
+            <div class=" col-md-8">
+                <div class="cantainer mt-3">
+                    <div class="">
+                        <div class="px-3">
+                            <div class="row justify-content-between mb-6">
+                                <div
+                                    class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end-xxl-0 border-bottom-xxl-0 border-end border-bottom pb-4 pb-xxl-0 ">
+                                    <span class="uil fs-3 lh-1 uil-folder text-primary"></span>
+                                    <h1 class="fs-3 pt-3">{{projects_count}}</h1>
+                                    <p class="fs--1 mb-0">Projects</p>
+                                </div>
+                                <div
+                                    class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end-xxl-0 border-bottom-xxl-0 border-end-md border-bottom pb-4 pb-xxl-0">
+                                    <span class="uil fs-3 lh-1 uil-folder-open text-warning"></span>
+                                    <h1 class="fs-3 pt-3">{{projects_count_pending}}</h1>
+                                    <p class="fs--1 mb-0">Pending</p>
+                                </div>
+                                <div
+                                    class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-bottom-xxl-0 border-bottom border-end border-end-md-0 pb-4 pb-xxl-0 pt-4 pt-md-0">
+                                    <span class="uil fs-3 lh-1 uil-folder-check text-success"></span>
+                                    <h1 class="fs-3 pt-3">{{projects_count_completed}}</h1>
+                                    <p class="fs--1 mb-0">Completed Projects</p>
+                                </div>
+                                <div
+                                    class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end-md border-end-xxl-0 border-bottom border-bottom-md-0 pb-4 pb-xxl-0 pt-4 pt-xxl-0">
+                                    <span class="uil fs-3 lh-1 uil-clipboard-alt text-primary"></span>
+                                    <h1 class="fs-3 pt-3">{{task_count}}</h1>
+                                    <p class="fs--1 mb-0">Task</p>
+                                </div>
+                                <div
+                                    class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end border-end-xxl-0 pb-md-4 pb-xxl-0 pt-4 pt-xxl-0">
+                                    <span class="uil fs-3 lh-1 uil-file-edit-alt text-warning"></span>
+                                    <h1 class="fs-3 pt-3">{{task_count_pending}}</h1>
+                                    <p class="fs--1 mb-0">Pending</p>
+                                </div>
+                                <div
+                                    class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end-xxl pb-md-4 pb-xxl-0 pt-4 pt-xxl-0">
+                                    <span class="uil fs-3 lh-1 uil-file-check-alt text-success"></span>
+                                    <h1 class="fs-3 pt-3">{{task_count_completed}}</h1>
+                                    <p class="fs--1 mb-0">Completed Taks</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="cantainer mt-4">
+                        <div class="pb-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-12">
+                                        <div class="row flex-between-center g-3">
+                                            <div class="col-sm-8">
+                                                <p class="text-700 mb-0">Iam Working on : </p>
+                                                <h5 class="text-black text-uppercase">{{i.iam_doing}}</h5>
+                                            </div>
+                                            <div class=" col-sm-3">
+                                                <button class="btn btn-phoenix-secondary dropdown-toggle w-100"
+                                                    id="headerExample" type="button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">Select Project or
+                                                    Task</button>
+                                                <!-- <div class="dropdown-menu" aria-labelledby="headerExample">
+                                                    <h6 class="dropdown-header">Project</h6>
+                                                    {% for p in projectes  %}
+                                                    <a class="dropdown-item" href="{% url 'staff_project_doing' p.id %}">{{p.Project_name}}</a>
+                                                    {% endfor %}
+                                                    <div class="dropdown-divider"></div>
+                                                    <h6 class="dropdown-header">Task</h6>
+                                                    {% for t in taskss %}
+                                                    <a class="dropdown-item" href="{% url 'staff_task_doing' t.id %}">{{t.task_name}}</a>
+                                                    {% endfor %}
+
+
+                                                </div> -->
+
+
+                                                <div class="dropdown-menu" style="height: 300px; overflow: scroll;" aria-labelledby="headerExample">
+                                                    <div class="container"><input class="form-control" type="text"
+                                                            id="searchInput" onkeyup="filterItems()"
+                                                            placeholder="Search Project and Tasks"></div>
+
+                                                    <h6 class="dropdown-header text-dark">Project</h6>
+                                                    {% for p in projectes %}
+                                                    <a class="dropdown-item project-item"
+                                                        href="{% url 'staff_project_doing' p.id %}">{{p.Project_name}}</a>
+                                                    {% endfor %}
+                                                    <div class="dropdown-divider"></div>
+                                                    <h6 class="dropdown-header text-dark">Task</h6>
+                                                    {% for t in taskss %}
+                                                    <a class="dropdown-item task-item"
+                                                        href="{% url 'staff_task_doing' t.id %}">{{t.task_name}}</a>
+                                                    {% endfor %}
+                                                </div>
+
+                                            </div>
+                                            <div class=" col-sm-1 text-center">
+                                                <a href="{% url 'staff_clear_doing' i.id %}">
+                                                    <span class="uil fs-3 uil-backspace text-danger"></span>
+
+                                                </a>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="card cover-image mb-5">
+                    <div class="card-header hover-actions-trigger position-relative mb-6" style="min-height: 100px; ">
+                        <div class="bg-holder"
+                            style="background-image: linear-gradient(0deg, #000000 -3%, rgba(0, 0, 0, 0) 83%), url(../../static/logos/programming-background-with-person-working-with-codes-computer.jpg)">
+                            <input class="d-none" id="upload-cover-image" type="file" /><label
+                                class="cover-image-file-input" for="upload-cover-image"></label>
+                            <div class="hover-actions end-0 bottom-0 pe-1 pb-2 text-white"><span
+                                    class="fa-solid fa-camera me-2"></span></div>
+                        </div><input class="d-none" id="upload-porfile-picture" type="file" /><label
+                            class="avatar avatar-4xl status-online feed-avatar-profile cursor-pointer"
+                            for="upload-porfile-picture"><img class="rounded-circle img-thumbnail bg-white shadow-sm"
+                                src="{{i.photo.url}}" width="200" alt="" /></label>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex flex-wrap mb-2 align-items-center">
+                                    <h3 class="me-2 text-uppercase">{{i.fullname}}</h3><span
+                                        class="fw-normal fs-0">{{i.designation}}</span>
+                                </div>
+                                <div class=" align-items-center mt-3 ">
+                                    <div class="row">
+                                        {% if i.attendance_status == '0' %}
+                                        <div class="col">
+                                            <button class="btn btn-lg btn-phoenix-success px-sm-7 w-100">
+                                                <span class="uil fs-3 lh-1 uil-desktop-alt-slash text-danger"></span>
+                                            </button>
+                                        </div>
+                                        {% elif i.attendance_status == '1' %}
+
+                                        {% if i.checkin_status == 'checkin' %}
+
+                                        {% if breakTime %}
+                                        
+                                        <script>
+                                            window.onload = function () {
+                                                breakaftercountown();
+                                            }
+                                        </script>
+                                        <div class="col-8 text-center align-items-center justify-content-center "
+                                            id="HourCounter">
+                                            <h3 id="checkTime" hidden >{{c_time}}</h3>
+                                            <h3 class="mt-3" id="countdown"></h3> 
+                                        </div>
+
+                                        <h1 id="hourhide" hidden>{{hour}}</h1>
+                                        <h1 id="minutehide" hidden>{{minute}}</h1>
+                                        <h1 id="secondhide" hidden>{{second}}</h1>
+
+
+                                        
+
+
+                                        {% else %}
+
+
+                                        <script>
+                                            window.onload = function () {
+                                                startCountdown();
+                                            };
+                                        </script>
+
+
+
+                                        <div class="col-8 text-center align-items-center justify-content-center "
+                                            id="HourCounter">
+                                            <h3 id="checkTime" hidden>{{c_time}}</h3>
+                                            <h3 class="mt-3" id="countdown"></h3>
+                                        </div>
+
+                                        {% endif %}
+
+
+                                        <div class="col-8 text-center align-items-center justify-content-center "
+                                            id="BreakTimerCounter" hidden>
+                                            <h4>Break Time Count:</h4>
+                                            <h3 class="mt-3" id="timer"></h3>
+                                        </div>
+
+
+                                        <button hidden id="stopBreakTime"
+                                            class="col-4 btn hover-bg-200 p-2 rounded-3 text-center text-decoration-none "
+                                            onclick="BreakTimeEnd();"><img src="../../static/staff_nav_icons/stop.png"
+                                                alt width="30">
+                                            <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">End Break Time</p>
+                                        </button>
+
+
+
+
+
+                                        <button id="StartBreakTime"
+                                            class="col-2 btn hover-bg-200 p-2 rounded-3 text-center text-decoration-none "
+                                            onclick="BreakTimeStart();"><img
+                                                src="../../static/staff_nav_icons/tea-cup.png" alt width="30">
+                                            <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Break Time</p>
+                                        </button>
+
+
+
+
+                                        <a id="Checkoutbtn"
+                                            class="col-2 hover-bg-200 p-2 rounded-3 text-center text-decoration-none "
+                                            href="{% url 'staff_checkout' i.id %}"><img
+                                                src="../../static/staff_nav_icons/logout.png" alt width="30">
+                                            <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Check out</p>
+                                        </a>
+
+
+                                        <!-- <a href="{% url 'staff_checkout' i.id %}" class="col">
+                                            <button class="btn btn-lg btn-phoenix-danger px-sm-7 w-100">Check
+                                                Out</button></a> -->
+
+
+
+
+
+                                        {% else %}
+                                        <a href="{% url 'staff_checkin' i.id %}" class="col">
+                                            <button class="btn btn-lg btn-phoenix-success px-sm-7 w-100">Check
+                                                in</button>
+                                        </a>
+                                        {% endif %}
+
+                                        {% endif %}
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row g-6">
+            <div class="cantainer mt-10">
+                <div class="row">
+
+
+                    <div class="col-md-6">
+                        <div class="mb-1">
+                            <h2 class="mb-1" id="scrollspyEmails">Projects</h2>
+                            <div>
+                                <div class="scrollbar">
+                                    <ul class="nav nav-underline flex-nowrap mb-1" id="emailTab" role="tablist">
+                                        <li class="nav-item me-3"><a class="nav-link text-nowrap border-0 active"
+                                                id="mail-tab" data-bs-toggle="tab" href="#tab-mail"
+                                                aria-controls="mail-tab" role="tab" aria-selected="true">Today Start
+                                                Projects<span class="text-700 fw-normal"></span></a></li>
+                                        <li class="nav-item me-3"><a class="nav-link text-nowrap border-0"
+                                                id="drafts-tab" data-bs-toggle="tab" href="#tab-drafts"
+                                                aria-controls="drafts-tab" role="tab" aria-selected="true">Today
+                                                Deadline Proejcts<span class="text-700 fw-normal"></span></a></li>
+
+                                    </ul>
+                                </div>
+                                <div class="search-box w-100 mb-3">
+                                    <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                                        <input class="form-control search-input search" type="search"
+                                            placeholder="Search..." aria-label="Search" />
+                                        <span class="fas fa-search search-box-icon"></span>
+                                    </form>
+                                </div>
+                                <div class="tab-content" id="profileTabContent">
+                                    <div class="tab-pane fade show active" id="tab-mail" role="tabpanel"
+                                        aria-labelledby="mail-tab">
+                                        <div class="border-top border-bottom border-200" id="allEmailsTable"
+                                            data-list='{"valueNames":["subject","sent","date","source","status"],"page":7,"pagination":true}'>
+                                            <div class="table-responsive scrollbar mx-n1 px-1">
+                                                <table class="table fs--1 mb-0">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <th class="sort white-space-nowrap align-middle pe-3 ps-0 text-uppercase"
+                                                                scope="col" data-sort="subject"
+                                                                style="width:31%; min-width:200px">Project</th>
+                                                            <th class="sort align-middle pe-3 text-uppercase"
+                                                                scope="col" data-sort="sent"
+                                                                style="width:15%; min-width:140px">Start Date</th>
+                                                            <th class="sort align-middle text-start text-uppercase"
+                                                                scope="col" data-sort="date"
+                                                                style="width:20%; min-width:200px">Dead Line</th>
+                                                            <th class="sort align-middle pe-0 text-uppercase"
+                                                                scope="col" style="width:15%; min-width:160px">Action
+                                                            </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list" id="all-email-table-body">
+                                                        <!-- <tr
+                                                            class="hover-actions-trigger btn-reveal-trigger position-static">
+
+                                                            <td
+                                                                class="subject order align-middle white-space-nowrap py-2 ps-0 text-">
+                                                                <a class="fw-semi-bold text-primary" href="#!">Quary
+                                                                    about purchased soccer socks</a>
+                                                                <div class="fs--2 d-block">jackson@mail.com</div>
+                                                            </td>
+                                                            <td
+                                                                class="sent align-middle white-space-nowrap text-start fw-bold text-700 py-2">
+                                                                Jackson Pollock</td>
+                                                            <td
+                                                                class="date align-middle white-space-nowrap text-900 py-2">
+                                                                Dec 29, 2021 10:23 am</td>
+                                                            <td class="align-middle white-space-nowrap ps-3"><span
+                                                                    class="fa-solid fa-phone text-primary me-2"></span>Call
+                                                            </td>
+
+                                                        </tr> -->
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="tab-drafts" role="tabpanel"
+                                        aria-labelledby="drafts-tab">
+                                        <div class="border-top border-bottom border-200" id="draftsEmailsTable"
+                                            data-list='{"valueNames":["subject","sent","date","source","status"],"page":7,"pagination":true}'>
+                                            <div class="table-responsive scrollbar mx-n1 px-1">
+                                                <table class="table fs--1 mb-0">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <th class="sort white-space-nowrap align-middle pe-3 ps-0 text-uppercase"
+                                                                scope="col" data-sort="subject"
+                                                                style="width:31%; min-width:200px">Project</th>
+                                                            <th class="sort align-middle pe-3 text-uppercase"
+                                                                scope="col" data-sort="sent"
+                                                                style="width:15%; min-width:140px">startdate</th>
+                                                            <th class="sort align-middle text-start text-uppercase"
+                                                                scope="col" data-sort="date"
+                                                                style="width:20%; min-width:200px">deadline</th>
+                                                            <th class="sort align-middle pe-0 text-uppercase"
+                                                                scope="col" style="width:15%; min-width:160px">Action
+                                                            </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list" id="drafts-email-table-body">
+                                                        <!-- <tr
+                                                            class="hover-actions-trigger btn-reveal-trigger position-static">
+
+                                                            <td
+                                                                class="subject order align-middle white-space-nowrap py-2 ps-0 text-">
+                                                                <a class="fw-semi-bold text-primary" href="#!">Quary
+                                                                    about purchased soccer socks</a>
+                                                                <div class="fs--2 d-block">jackson@mail.com</div>
+                                                            </td>
+                                                            <td
+                                                                class="sent align-middle white-space-nowrap text-start fw-bold text-700 py-2">
+                                                                Jackson Pollock</td>
+                                                            <td
+                                                                class="date align-middle white-space-nowrap text-900 py-2">
+                                                                Dec 29, 2021 10:23 am</td>
+                                                            <td class="align-middle white-space-nowrap ps-3"><span
+                                                                    class="fa-solid fa-phone text-primary me-2"></span>Call
+                                                            </td>
+
+                                                        </tr> -->
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-md-6">
+                        <div class="mb-1">
+                            <h2 class="mb-1" id="scrollspyEmails">Task</h2>
+                            <div>
+                                <div class="scrollbar">
+                                    <ul class="nav nav-underline flex-nowrap mb-1" id="emailTab" role="tablist">
+                                        <li class="nav-item me-3"><a class="nav-link text-nowrap border-0 active"
+                                                id="mail-tab" data-bs-toggle="tab" href="#tab-Today-Startdate-Tasks"
+                                                aria-controls="mail-tab" role="tab" aria-selected="true">Today Startdate
+                                                Tasks<span class="text-700 fw-normal"></span></a></li>
+                                        <li class="nav-item me-3"><a class="nav-link text-nowrap border-0"
+                                                id="drafts-tab" data-bs-toggle="tab" href="#tab-Today-Deadline-Tasks"
+                                                aria-controls="drafts-tab" role="tab" aria-selected="true">Today
+                                                Deadline Tasks<span class="text-700 fw-normal"></span></a></li>
+
+                                    </ul>
+                                </div>
+                                <div class="search-box w-100 mb-3">
+                                    <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                                        <input class="form-control search-input search" type="search"
+                                            placeholder="Search..." aria-label="Search" />
+                                        <span class="fas fa-search search-box-icon"></span>
+                                    </form>
+                                </div>
+                                <div class="tab-content" id="profileTabContent">
+                                    <div class="tab-pane fade show active" id="tab-Today-Startdate-Tasks"
+                                        role="tabpanel" aria-labelledby="mail-tab">
+                                        <div class="border-top border-bottom border-200" id="allEmailsTable"
+                                            data-list='{"valueNames":["subject","sent","date","source","status"],"page":7,"pagination":true}'>
+                                            <div class="table-responsive scrollbar mx-n1 px-1">
+                                                <table class="table fs--1 mb-0">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <th class="sort white-space-nowrap align-middle pe-3 ps-0 text-uppercase"
+                                                                scope="col" data-sort="subject"
+                                                                style="width:31%; min-width:200px">Task</th>
+                                                            <th class="sort align-middle pe-3 text-uppercase"
+                                                                scope="col" data-sort="sent"
+                                                                style="width:15%; min-width:140px">Start date</th>
+                                                            <th class="sort align-middle text-start text-uppercase"
+                                                                scope="col" data-sort="date"
+                                                                style="width:20%; min-width:200px">Dead Line</th>
+                                                            <th class="sort align-middle pe-0 text-uppercase"
+                                                                scope="col" style="width:15%; min-width:160px">Status
+                                                            </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list" id="all-email-table-body">
+                                                        {% for tt in tasks_today %}
+                                                        <tr
+                                                            class="hover-actions-trigger btn-reveal-trigger position-static">
+
+                                                            <td
+                                                                class="subject order align-middle white-space-nowrap py-2 ps-0 text-">
+                                                                <a class="fw-semi-bold text-primary"
+                                                                    href="{% url 'staff_task_view' tt.id %}">{{tt.task_name}}</a>
+
+                                                            </td>
+                                                            <td
+                                                                class="sent align-middle white-space-nowrap text-start fw-bold text-700 py-2">
+                                                                {{tt.start_date}}
+                                                            </td>
+                                                            <td
+                                                                class="date align-middle white-space-nowrap text-900 py-2">
+                                                                {{tt.end_date}}</td>
+
+                                                            <td class="align-middle white-space-nowrap ps-3">
+                                                                    {{tt.task_status}}
+                                                            </td>
+
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="tab-Today-Deadline-Tasks" role="tabpanel"
+                                        aria-labelledby="drafts-tab">
+                                        <div class="border-top border-bottom border-200" id="draftsEmailsTable"
+                                            data-list='{"valueNames":["subject","sent","date","source","status"],"page":7,"pagination":true}'>
+                                            <div class="table-responsive scrollbar mx-n1 px-1">
+                                                <table class="table fs--1 mb-0">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <th class="sort white-space-nowrap align-middle pe-3 ps-0 text-uppercase"
+                                                                scope="col" data-sort="subject"
+                                                                style="width:31%; min-width:200px">Task</th>
+                                                            <th class="sort align-middle pe-3 text-uppercase"
+                                                                scope="col" data-sort="sent"
+                                                                style="width:15%; min-width:140px">Start Date</th>
+                                                            <th class="sort align-middle text-start text-uppercase"
+                                                                scope="col" data-sort="date"
+                                                                style="width:20%; min-width:200px">Dead Line</th>
+                                                            <th class="sort align-middle pe-0 text-uppercase"
+                                                                scope="col" style="width:15%; min-width:160px">Status
+                                                            </th>
+                                                            <!-- <th class="sort align-middle pe-0 text-uppercase"
+                                                                scope="col" style="width:15%; min-width:160px">Status
+                                                            </th> -->
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list" id="drafts-email-table-body">
+                                                        {% for tet in tasks_end_today %}
+                                                        <tr
+                                                            class="hover-actions-trigger btn-reveal-trigger position-static">
+                                                            <td
+                                                                class="subject order align-middle white-space-nowrap py-2 ps-0 text-">
+                                                                <a class="fw-semi-bold text-danger"
+                                                                    href="{% url 'staff_task_view' tet.id %}">{{tet.task_name}}</a>
+                                                                <!-- <div class="fs--2 d-block" style="width: 100px; overflow: scroll;">{{tet.task_progress_reports}}
+                                                                </div> -->
+                                                            </td>
+                                                            <td
+                                                                class="sent align-middle white-space-nowrap text-start fw-bold text-700 py-2">
+                                                                {{tet.start_date}}
+                                                            </td>
+                                                            <td
+                                                                class="date align-middle white-space-nowrap text-900 py-2 text-danger">
+                                                                {{tet.end_date}}</td>
+
+                                                            <td class="align-middle white-space-nowrap ps-3"><span
+                                                                    class="badge badge-phoenix fs--2 badge-phoenix-secondary">{{tet.task_status}}</span>
+                                                            </td>
+
+                                                            <!-- <td class="align-middle white-space-nowrap ps-3"><span
+                                                                    class="fa-solid fa-phone text-primary me-2"></span>{{tet.task_status}}
+                                                            </td> -->
+                                                        </tr>
+                                                        {% endfor %}
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+const currentTime = new Date();
+const hours = currentTime.getHours().toString().padStart(2, '0');
+const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+var righttime = (`${hours}:${minutes}:${seconds}`);
+localStorage.setItem("Break_Start_Time", data);
+</script>
+
+<!-- 
+<button onclick="saveData()">Save Data</button>
+<button onclick="retrieveData()">Retrieve Data</button> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    var countdownTimeout;
+
+    function startCountdown() {
+        var checkTime = document.getElementById("checkTime").textContent;
+        var checkHours = parseInt(checkTime.split(":")[0], 10);
+        var checkMinutes = parseInt(checkTime.split(":")[1], 10);
+        var checkSeconds = parseInt(checkTime.split(":")[2], 10);
+        
+        var currentTime = new Date();
+        var currentHours = currentTime.getHours();
+        var currentMinutes = currentTime.getMinutes();
+        var currentSeconds = currentTime.getSeconds();
+        
+        var hourDifference = currentHours - checkHours;
+        var minuteDifference = currentMinutes - checkMinutes;
+        var secondDifference = currentSeconds - checkSeconds;
+        
+        if (secondDifference < 0) {
+            minuteDifference--;
+            secondDifference += 60;
+        }
+        
+        if (minuteDifference < 0) {
+            hourDifference--;
+            minuteDifference += 60;
+        }
+        
+        var hourString = hourDifference.toString().padStart(2, '0');
+        var minuteString = minuteDifference.toString().padStart(2, '0');
+        var secondString = secondDifference.toString().padStart(2, '0');
+        
+        var countdown = hourString + ":" + minuteString + ":" + secondString;
+        
+        document.getElementById("countdown").textContent = countdown;
+        countdownTimeout = setTimeout(startCountdown, 1000);
+    }
+
+
+</script>
+
+<script>
+    function BreakTimeStart() {
+
+        const currentTime = new Date();
+        const hours = currentTime.getHours().toString().padStart(2, '0');
+        const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+        const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+        var righttime = (`${hours}:${minutes}:${seconds}`);
+        localStorage.setItem("Break_Start_Time", righttime);
+
+
+
+
+        var timebreak = document.getElementById("countdown").textContent;
+
+        clearTimeout(countdownTimeout);
+
+        //save to local variable
+        var data = timebreak;
+        localStorage.setItem("StopedCountown", data);
+
+        console.log('--------------------------25234965735736578623856287435---------------')
+
+
+
+
+        var formData = {
+            timebreak: timebreak,
+
+        };
+        $.ajax({
+            url: "{% url 'staff_attend_breaktimestart' %}",
+            type: "POST",
+            data: formData,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (response) {
+                var a = response.countown_stoped;
+                console.log('Collecting', a);
+                breakTimer();
+                //add attribute hidden in by Id
+                document.getElementById("HourCounter").setAttribute("hidden", "hidden");
+                document.getElementById("StartBreakTime").setAttribute("hidden", "hidden");
+                document.getElementById("Checkoutbtn").setAttribute("hidden", "hidden");
+                document.getElementById("BreakTimerCounter").removeAttribute("hidden");
+                document.getElementById("stopBreakTime").removeAttribute("hidden");
+
+
+                noreload();
+
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error(errorThrown);
+            }
+        });
+    }
+</script>
+
+
+
+<script>
+    function BreakTimeEnd() {
+
+        const currentTime = new Date();
+        const hours = currentTime.getHours().toString().padStart(2, '0');
+        const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+        const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+        var righttime = (`${hours}:${minutes}:${seconds}`);
+        localStorage.setItem("Break_End_Time", righttime);
+
+
+        var timeendbreak = document.getElementById("timer").textContent;
+
+        var timebreak = localStorage.getItem("StopedCountown");
+        var BreakStart = localStorage.getItem("Break_Start_Time");
+        var BreakEnd = localStorage.getItem("Break_End_Time");
+
+
+
+        var formData = {
+            timeendbreak: timeendbreak,
+            timebreak: timebreak,
+            BreakStart:BreakStart,
+            BreakEnd:BreakEnd,
+
+        };
+        $.ajax({
+            url: "{% url 'staff_attend_breaktimeend' %}",
+            type: "POST",
+            data: formData,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (response) {
+                location.reload();
+                
+
+                // var data = localStorage.getItem("StopedCountown");
+                // console.log(data);
+
+
+
+                // document.getElementById("HourCounter").removeAttribute("hidden");
+                // document.getElementById("StartBreakTime").removeAttribute("hidden");
+                // document.getElementById("Checkoutbtn").removeAttribute("hidden");
+                // document.getElementById("BreakTimerCounter").setAttribute("hidden", "hidden");
+                // document.getElementById("stopBreakTime").setAttribute("hidden", "hidden");
+
+
+                // var data = localStorage.getItem("StopedCountown");
+                // console.log(data);
+                // var parts = data.split(" : ");
+                // var hours = parseInt(parts[0]);
+                // var minutes = parseInt(parts[1]);
+                // var seconds = parseInt(parts[2]);
+
+                // // Start the timer
+                // let timer = setInterval(() => {
+                //     // Increment the seconds
+                //     seconds++;
+
+                //     // Check if we need to increment the minutes
+                //     if (seconds === 60) {
+                //         seconds = 0;
+                //         minutes++;
+                //     }
+
+                //     // Check if we need to increment the hours
+                //     if (minutes === 60) {
+                //         minutes = 0;
+                //         hours++;
+                //     }
+
+                //     // Display the updated time
+                //     displayCountdown(hours, minutes, seconds);
+                // }, 1000);
+
+                // // Format the time as "HH : MM : SS"
+                // function formatTime(hours, minutes, seconds) {
+                //     return (
+                //         padZero(hours) + " : " + padZero(minutes) + " : " + padZero(seconds)
+                //     );
+                // }
+
+                // // Add leading zero if the value is less than 10
+                // function padZero(value) {
+                //     return value < 10 ? "0" + value : value;
+                // }
+
+                // // Display the countdown in the HTML element
+                // function displayCountdown(hours, minutes, seconds) {
+                //     var countdown = formatTime(hours, minutes, seconds);
+                //     document.getElementById("countdown").innerHTML = countdown;
+                // }
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error(errorThrown);
+            }
+        });
+
+    };
+
+
+</script>
+
+
+
+
+<script>
+    function breakTimer() {
+        const timerElement = document.getElementById('timer');
+        let seconds = 0;
+        const timerId = setInterval(() => {
+            seconds++;
+            const formattedTime = formatTime(seconds);
+            timerElement.textContent = formattedTime;
+        }, 1000);
+
+        function formatTime(totalSeconds) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            const formattedHours = padZero(hours);
+            const formattedMinutes = padZero(minutes);
+            const formattedSeconds = padZero(seconds);
+
+            return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+        }
+        function padZero(number) {
+            return number.toString().padStart(2, '0');
+        }
+    }
+</script>
+
+
+<script>
+           
+function breakaftercountown() {
+    var hideHour = document.getElementById("hourhide").textContent;
+    var hideMinut = document.getElementById("minutehide").textContent;
+    var hideSecond = document.getElementById("secondhide").textContent;
+
+
+    console.log(hideHour);
+    console.log(hideMinut);
+    console.log(hideSecond);
+
+
+    var checkTime = document.getElementById("checkTime").textContent;
+    
+    var checkHours = parseInt(checkTime.split(":")[0], 10);
+    var checkMinutes = parseInt(checkTime.split(":")[1], 10);
+    var checkSeconds = parseInt(checkTime.split(":")[2], 10);
+    
+    var currentTime = new Date();
+    var currentHours = currentTime.getHours();
+    var currentMinutes = currentTime.getMinutes();
+    var currentSeconds = currentTime.getSeconds();
+    
+    var hourDifference = currentHours - checkHours;
+    var minuteDifference = currentMinutes - checkMinutes;
+    var secondDifference = currentSeconds - checkSeconds;
+    
+
+    hourDifference-= hideHour ;
+    minuteDifference-= hideMinut;
+    secondDifference -= hideSecond;
+    
+    // Handle negative differences
+    if (secondDifference < 0) {
+        minuteDifference--;
+        secondDifference += 60;
+    }
+    if (minuteDifference < 0) {
+        hourDifference--;
+        minuteDifference += 60;
+    }
+    if (hourDifference < 0) {
+        hourDifference += 24; // Assuming a 24-hour format
+    }
+    
+    var hourString = hourDifference.toString().padStart(2, '0');
+    var minuteString = minuteDifference.toString().padStart(2, '0');
+    var secondString = secondDifference.toString().padStart(2, '0');
+    
+    var countdown = hourString + " : " + minuteString + " : " + secondString;
+    
+    console.log(countdown);
+    
+    document.getElementById("countdown").innerHTML = countdown;
+    setTimeout(breakaftercountown, 1000);
+}
+
+           
+
+
+    // function breakaftercountown() {
+
+
+    //     console.log('this funtion works on it---------')
+
+    //     var checkTime = document.getElementById("checkTime").textContent;
+        
+
+    //     var checkHours = parseInt(checkTime.split(":")[0], 10);
+
+    //     var checkMinutes = parseInt(checkTime.split(":")[1], 10);
+
+    //     var currentTime = new Date();
+
+    //     var currentHours = currentTime.getHours();
+    //     var currentMinutes = currentTime.getMinutes();
+    //     var currentSeconds = currentTime.getSeconds();
+    //     var hourDifference = currentHours - checkHours;
+    //     var minuteDifference = currentMinutes - checkMinutes;
+    //     var secondDifference = currentSeconds;
+
+    //     if (minuteDifference < 0) {
+    //         hourDifference--;
+    //         minuteDifference += 60;
+    //     }
+
+    //     if (secondDifference < 0) {
+    //         minuteDifference--;
+    //         secondDifference += 60;
+    //     }
+    //     var hourString = hourDifference.toString().padStart(2, '0');
+    //     var minuteString = minuteDifference.toString().padStart(2, '0');
+    //     var secondString = secondDifference.toString().padStart(2, '0');
+
+    //     var countdown = hourString + " : " + minuteString + " : " + secondString;
+        
+    //     console.log(countdown)
+
+
+    //     document.getElementById("countdown").innerHTML = countdown;
+    //     setTimeout(breakaftercountown, 1000);
+    
+
+
+
+
+
+    // }
+</script>
+
+
+<script>
+    function noreload(){
+        window.addEventListener('beforeunload', function (event) {
+                    event.preventDefault();
+                    event.returnValue = '';
+                });
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    // Save data to local storage
+    function saveData() {
+        var data = "Anwar Sadik savd to local storage"; // Replace with the actual data you want to save
+        localStorage.setItem("key", data);
+    }
+
+    // Retrieve data from local storage
+    function retrieveData() {
+        var data = localStorage.getItem("key");
+        console.log(data); // Do something with the retrieved data
+    }
+
+</script>
+
+
+
+
+<script>
+    function filterItems() {
+        var input, filter, items, item, i;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        items = document.getElementsByClassName("dropdown-item");
+
+        for (i = 0; i < items.length; i++) {
+            item = items[i];
+            if (item.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                item.style.display = "";
+            } else {
+                item.style.display = "none";
+            }
+        }
+    }
+</script>
+<script>
+    var element = document.getElementById('offline_');
+    element.removeAttribute('hidden');
+</script>
+<script>
+    var navLink = document.querySelector('.home-nav');
+    navLink.classList.add('coloreadder');
+  
+  </script>
+  
+{% endblock %}

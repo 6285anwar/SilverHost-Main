@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en-US" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>SilverHost</title>
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'logos/240.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'logos/240.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="../assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="../assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+    <script src="../vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="../vendors/simplebar/simplebar.min.js"></script>
+    <script src="{% static 'admin/js/config.js' %}"></script>
+    <script src="{% static 'admin/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'admin/js/simplebar.min.js' %}"></script>
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'admin/js/config.js' %}"></script>
+
+
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+        rel="stylesheet">
+    <link href="../vendors/simplebar/simplebar.min.css" rel="stylesheet">
+    <link href="{% static 'admin/css/simplebar.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link href="{% static 'admin/css/theme-rtl.min.css' %}" type="text/css" rel="stylesheet" id="style-rtl">
+    <link href="{% static 'admin/css/theme.min.css' %}" type="text/css" rel="stylesheet" id="style-default">
+    <link href="{% static 'admin/css/user-rtl.min.css' %}" type="text/css" rel="stylesheet" id="user-style-rtl">
+    <link href="{% static 'admin/css/user.min.css' %}" type="text/css" rel="stylesheet" id="user-style-default">
+    <script>
+        var phoenixIsRTL = window.config.config.phoenixIsRTL;
+        if (phoenixIsRTL) {
+            var linkDefault = document.getElementById('style-default');
+            var userLinkDefault = document.getElementById('user-style-default');
+            linkDefault.setAttribute('disabled', true);
+            userLinkDefault.setAttribute('disabled', true);
+            document.querySelector('html').setAttribute('dir', 'rtl');
+        } else {
+            var linkRTL = document.getElementById('style-rtl');
+            var userLinkRTL = document.getElementById('user-style-rtl');
+            linkRTL.setAttribute('disabled', true);
+            userLinkRTL.setAttribute('disabled', true);
+        }
+    </script>
+    <link href="../vendors/leaflet/leaflet.css" rel="stylesheet">
+    <link href="../vendors/leaflet.markercluster/MarkerCluster.css" rel="stylesheet">
+    <link href="../vendors/leaflet.markercluster/MarkerCluster.Default.css" rel="stylesheet">
+    <link href="{% static 'admin/css/leaflet.css' %}" rel="stylesheet">
+    <link href="{% static 'admin/css/MarkerCluster.css' %}" rel="stylesheet">
+    <link href="{% static 'admin/css/MarkerCluster.Default.css' %}" rel="stylesheet">
+</head>
+
+
+<body>
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+        <div class="px-3">
+            <div class="row min-vh-100 flex-center p-5">
+                <div class="col-12 col-xl-10 col-xxl-8">
+                    <div class="row justify-content-center align-items-center g-5">
+                        <div class="col-12 col-lg-6 text-center order-lg-1"><img class="img-fluid w-lg-100 d-dark-none"
+                                src="../../assets/img/spot-illustrations/404-illustration.png" alt="" width="400" /><img
+                                class="img-fluid w-md-50 w-lg-100 d-light-none"
+                                src="../../assets/img/spot-illustrations/dark_404-illustration.png" alt=""
+                                width="540" /></div>
+                        <div class="col-12 col-lg-6 text-center text-lg-start"><img
+                                class="img-fluid mb-6 w-50 w-lg-75 d-dark-none"
+                                src="{% static 'logos/Group 1.png' %}" alt="" /><img
+                                class="img-fluid mb-6 w-50 w-lg-75 d-light-none"
+                                src="{% static 'logos/240.png' %}" alt="" />
+                            <h2 class="text-800 fw-bolder mb-3">You cannot register</h2>
+                            <p class="text-900 mb-5">Because you are trying to register by changing uniform resource locators(URL) Or admin has not given you permission to register<br
+                                    class="d-none d-sm-block" />Contact admin to register. </p><a
+                                class="btn btn-lg btn-primary" type="submit" href="mailto:example@example.com?subject=Hello%20World&body=This%20is%20the%20body%20text.">Contact Admin</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </main><!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+
+
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    <script src="../vendors/popper/popper.min.js"></script>
+    <script src="../vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="../vendors/anchorjs/anchor.min.js"></script>
+    <script src="../vendors/is/is.min.js"></script>
+    <script src="../vendors/fontawesome/all.min.js"></script>
+    <script src="../vendors/lodash/lodash.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="../vendors/list.js/list.min.js"></script>
+    <script src="../vendors/feather-icons/feather.min.js"></script>
+    <script src="../vendors/dayjs/dayjs.min.js"></script>
+    <script src="../assets/js/phoenix.js"></script>
+    <script src="../vendors/echarts/echarts.min.js"></script>
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbaQGvhe7Af-uOMJz68NWHnO34UjjE7Lo&callback=revenueMapInit"
+        async></script>
+    <script src="../vendors/leaflet/leaflet.js"></script>
+    <script src="../vendors/leaflet.markercluster/leaflet.markercluster.js"></script>
+    <script src="../vendors/leaflet.tilelayer.colorfilter/leaflet-tilelayer-colorfilter.min.js"></script>
+    <script src="../assets/js/ecommerce-dashboard.js"></script>
+
+
+    <script src="../../static/vendors/choices/choices.min.js"></script>
+    <script src="../../vendors/dropzone/dropzone.min.js"></script>
+    <script src="../../static/vendors/dropzone/dropzone.min.js"></script>
+
+
+    <script src="{% static 'admin/js/popper.min.js'%}"></script>
+    <script src="{% static 'admin/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'admin/js/anchor.min.js'%}"></script>
+    <script src="{% static 'admin/js/is.min.js'%}"></script>
+    <script src="{% static 'admin/js/all.min.js'%}"></script>
+    <script src="{% static 'admin/js/lodash.min.js'%}"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="{% static 'admin/js/list.min.js'%}"></script>
+    <script src="{% static 'admin/js/feather.min.js'%}"></script>
+    <script src="{% static 'admin/js/dayjs.min.js'%}"></script>
+    <script src="{% static 'admin/js/phoenix.js'%}"></script>
+    <script src="{% static 'admin/js/echarts.min.js'%}"></script>
+    <script src="{% static 'admin/js/index.min.js'%}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbaQGvhe7Af-uOMJz68NWHnO34UjjE7Lo&amp;callback=revenueMapInit"
+        async></script>
+    <script src="{% static 'admin/js/leaflet.js'%}"></script>
+    <script src="{% static 'admin/js/leaflet.markercluster.js'%}"></script>
+    <script src="{% static 'admin/js/leaflet-tilelayer-colorfilter.min.js'%}"></script>
+    <script src="{% static 'admin/js/ecommerce-dashboard.js'%}"></script>
+
+    <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+    <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+    <script src="{% static 'vendors/is/is.min.js'%}"></script>
+    <script src="{% static 'vendors/fontawesome/all.min.js'%}"></script>
+    <script src="{% static 'vendors/lodash/lodash.min.js'%}"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+    <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+    <script src="{% static 'vendors/dayjs/dayjs.min.js'%}"></script>
+    <script src="{% static 'admin/js/phoenix.js' %}"></script>
+</body>
+
+</html>

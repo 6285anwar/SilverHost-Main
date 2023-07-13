@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en-US" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SilverHost</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'admin/img/favicons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'logos/240.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'logos/240.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'admin/img/favicons/favicon.ico' %}">
+    <link rel="manifest" href="{% static 'admin/img/favicons/manifest.json' %}">
+    <meta name="msapplication-TileImage" content="{% static 'admin/img/favicons/mstile-150x150.png' %}">
+    <meta name="theme-color" content="#ffffff">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'admin/js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+        rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link href="{% static 'admin/css/theme-rtl.min.css' %}" type="text/css" rel="stylesheet" id="style-rtl">
+    <link href="{% static 'admin/css/theme.min.css' %}" type="text/css" rel="stylesheet" id="style-default">
+    <link href="{% static 'admin/css/user-rtl.min.css' %}" type="text/css" rel="stylesheet" id="user-style-rtl">
+    <link href="{% static 'admin/css/user.min.css' %}" type="text/css" rel="stylesheet" id="user-style-default">
+    <script>
+        var phoenixIsRTL = window.config.config.phoenixIsRTL;
+        if (phoenixIsRTL) {
+            var linkDefault = document.getElementById('style-default');
+            var userLinkDefault = document.getElementById('user-style-default');
+            linkDefault.setAttribute('disabled', true);
+            userLinkDefault.setAttribute('disabled', true);
+            document.querySelector('html').setAttribute('dir', 'rtl');
+        } else {
+            var linkRTL = document.getElementById('style-rtl');
+            var userLinkRTL = document.getElementById('user-style-rtl');
+            linkRTL.setAttribute('disabled', true);
+            userLinkRTL.setAttribute('disabled', true);
+        }
+    </script>
+</head>
+
+<body>
+    <!-- ===============================================-->
+    <!--   admin | admin   -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+        <div class="container-fluid bg-300 dark__bg-1200">
+            <div class="bg-holder bg-auth-card-overlay" style="background-image:url('../static/admin/images/37.png');">
+            </div>
+            <!--/.bg-holder-->
+
+
+            <div class="row flex-center position-relative min-vh-100 g-0 py-5">
+                <div class="col-12 col-sm-12 col-lg-5">
+                    <div class="card border border-200 auth-card">
+                        <div class="card-body ">
+                            <div class="row align-items-center gx-0 gy-7">
+
+                                <div class="col mx-auto">
+                                    <div class="auth-form-box">
+                                        <div class="text-center mb-5"><a
+                                                class="d-flex flex-center text-decoration-none mb-4"
+                                                href="../../../index.html">
+                                                <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block">
+                                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9Ijg0IiB2aWV3Qm94PSIwIDAgNjAwIDg0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMS4xMDExNiA2MS4xNjk3VjYwLjgwMjdIMTkuMzI2VjYxLjkwMzlDMTkuMzI2IDY3LjM2MTcgMjIuNzI1MiA2OC44Mjk5IDMzLjA1MDUgNjguODI5OUM0Mi43Njk0IDY4LjgyOTkgNDUuMDY3NCA2Ny4yMzQgNDUuMDY3NCA2My42MTE0QzQ1LjA2NzQgNTkuOTg4OCA0My4yNDgxIDU5LjIzODggMzYuMDgyNyA1OC4yNjUzTDE4Ljk1OSA1Ni4xOTA2QzYuODE0MzggNTQuODUwMSAwIDQ5LjM5MjIgMCAzOS4xOTQ2QzAgMjguNTAyMiA5LjExMjQxIDIwLjA0NDEgMzAuMDAyNCAyMC4wNDQxQzQ5LjkzNDggMjAuMDQ0MSA2MS4yMzM2IDI3LjU3NjYgNjEuMjMzNiA0Mi4zODYzVjQyLjc1MzRINDIuOTYwOVY0Mi4wMzUyQzQyLjk2MDkgMzcuMDU2MSA0MC41MzUyIDM0LjUwMjcgMjkuMzQ4MSAzNC41MDI3QzIwLjIzNTcgMzQuNTAyNyAxNy45Mzc2IDM2LjA5ODYgMTcuOTM3NiAzOS45NjA2QzE3LjkzNzYgNDMuMTUyMyAxOS42MjkyIDQ0LjQ2MSAyNy42NTY1IDQ1LjQzNDVMNDAuNjQ2OSA0Ny4wMzAzQzU2LjkyNDcgNDguODQ5NiA2Mi45ODkxIDU0LjMwNzUgNjIuOTg5MSA2NC4zOTM0QzYyLjk4OTEgNzUuODE5OSA1MS42OTAzIDgzLjM1MjQgMzIuODU5IDgzLjM1MjRDMTIuMzUyIDgzLjI4ODYgMS4xMDExNiA3NS4yNjEzIDEuMTAxMTYgNjEuMTY5N1oiIGZpbGw9IiMxRTE5MjYiLz4KPHBhdGggZD0iTTcwLjQwOTkgMTQuNTcwM1YwSDg4LjYzNDdWMTQuNTA2NUw3MC40MDk5IDE0LjU3MDNaTTcwLjQwOTkgODMuMTEzVjE5Ljk5NjNIODguNjM0N1Y4My4xMTNINzAuNDA5OVoiIGZpbGw9IiMxRTE5MjYiLz4KPHBhdGggZD0iTTk3Ljc2MzEgODMuMjg4NlYwSDExNi4wMDRWODMuMjI0N0w5Ny43NjMxIDgzLjI4ODZaIiBmaWxsPSIjMUUxOTI2Ii8+CjxwYXRoIGQ9Ik0xMzYuMzE5IDgzLjExM0wxMjMuNzYgNTUuNTA0NEwxMzkuMTc2IDQ0LjkyMzhMMTQ3LjUzOCA2NC43MTI2SDE0OC43OTlMMTc2LjI5NiAwSDE5Ny41ODVMMTU5LjYxOSA4Mi45ODUzTDEzNi4zMTkgODMuMTEzWiIgZmlsbD0iIzkxNjVGRiIvPgo8cGF0aCBkPSJNMTg1LjU2OCA1MS43MDYzQzE4NS41NjggMzIuMjY4NiAxOTkuMjkzIDE5Ljk5NjMgMjE5LjMzNyAxOS45OTYzQzIzOS4zODEgMTkuOTk2MyAyNTIuNDk5IDMwLjQ0OTMgMjUyLjQ5OSA0OS41MkMyNTIuNDY0IDUxLjQ2OTggMjUyLjMwNCA1My40MTU0IDI1Mi4wMiA1NS4zNDQ5SDIwMi40NTJDMjAyLjk0NyA2NC42OTY3IDIwNy4zMiA2OC43MDIzIDIxOS4wOTcgNjguNzAyM0MyMjkuOTAxIDY4LjcwMjMgMjMzLjY2OCA2NS45MDk2IDIzMy42NjggNjAuNzIzVjU5LjUxMDFIMjUxLjg5MlY2MC44MzQ3QzI1MS44OTIgNzQuMDgwNCAyMzkuMDE0IDgzLjMyMDUgMjE5LjcwNCA4My4zMjA1QzE5OS40MiA4My4yODg2IDE4NS41NjggNzMuMzE0NCAxODUuNTY4IDUxLjcwNjNaTTIwMi42OTIgNDUuNzUzN0gyMzUuMDA4QzIzNC41MjkgMzcuNzc0MyAyMjkuNjYyIDM0LjIxNTYgMjE4Ljk3IDM0LjIxNTZDMjA4LjI3NyAzNC4yMTU2IDIwMy41NTQgMzcuODU0MSAyMDIuNjkyIDQ1Ljc1MzdaIiBmaWxsPSIjMUUxOTI2Ii8+CjxwYXRoIGQ9Ik0yNTkuOTIgODMuMjg4NlYxOS45OTYzSDI3Ny4xODdWMzcuNzEwNUgyNzguMzA0QzI4MC4wNDQgMjcuNjcyNSAyODYuNjAzIDE5Ljk5NjMgMjk5LjA1IDE5Ljk5NjNDMzEyLjkxOSAxOS45OTYzIDMxOC42MTYgMjkuNTcxNiAzMTguNjE2IDQxLjY2ODNWNTEuOTQ1N0gzMDAuMDRWNDUuNTYyMkMzMDAuMDQgMzguNzQ3OCAyOTcuMzExIDM1Ljc3OTUgMjg5Ljc2MiAzNS43Nzk1QzI4MS40NjQgMzUuNzc5NSAyNzguNDk2IDM5LjYwOTYgMjc4LjQ5NiA0Ny40MTM0VjgzLjMzNjVMMjU5LjkyIDgzLjI4ODZaIiBmaWxsPSIjMUUxOTI2Ii8+CjxwYXRoIGQ9Ik0zMjYuMDM2IDgzLjI1NjdWMEgzNDQuNjZWMzkuOTc2NkgzNDUuNjVDMzQ3LjY0NSAyOS40Mjc5IDM1NC45NyAxOS43NDA5IDM3MC44NjUgMTkuNzQwOUMzODcuNjIxIDE5Ljc0MDkgMzk1LjgyNCAzMC42NzI3IDM5NS44MjQgNDUuMDY3NFY4My4xOTI4SDM3Ny4yVjUwLjcxNjhDMzc3LjIgNDAuMjk1OCAzNzIuNzE2IDM2LjU2MTQgMzYxLjA1IDM2LjU2MTRDMzQ4LjUwNiAzNi41NjE0IDM0NC42NiA0MS42NTIzIDM0NC42NiA1Mi4wODkzVjgzLjI1NjdIMzI2LjAzNloiIGZpbGw9IiMxRTE5MjYiLz4KPHBhdGggZD0iTTQwMy4yNjEgNTEuNjkwNEM0MDMuMjYxIDMyLjI1MjYgNDE3LjIyNSAxOS45OTYzIDQzNy45ODcgMTkuOTk2M0M0NTguNzQ5IDE5Ljk5NjMgNDcyLjcxMyAzMi4yNTI2IDQ3Mi43MTMgNTEuNjkwNEM0NzIuNzEzIDcwLjg0MDggNDU4Ljc0OSA4My4yNTY3IDQzNy45ODcgODMuMjU2N0M0MTcuMjI1IDgzLjI1NjcgNDAzLjI2MSA3MC44NzI3IDQwMy4yNjEgNTEuNjkwNFpNNDU0LjYzMiA1MS42OTA0QzQ1NC42MzIgNDAuOTk4IDQ1MC4yNTkgMzYuMDE4OSA0MzcuOTg3IDM2LjAxODlDNDI1LjcxNSAzNi4wMTg5IDQyMS4zNTggNDAuOTk4IDQyMS4zNTggNTEuNjkwNEM0MjEuMzU4IDYyLjM4MjcgNDI1LjYwMyA2Ny4xMDY1IDQzNy45ODcgNjcuMTA2NUM0NTAuMzcxIDY3LjEwNjUgNDU0LjYgNjIuMzY2NyA0NTQuNiA1MS42OTA0SDQ1NC42MzJaIiBmaWxsPSIjMUUxOTI2Ii8+CjxwYXRoIGQ9Ik00ODEuMTg3IDYxLjE1MzhWNjAuNzg2OEg0OTkuNDEyVjYxLjg4NzlDNDk5LjQxMiA2Ny4zNDU4IDUwMi44MTEgNjguODE0IDUxMy4xMzcgNjguODE0QzUyMi44MzkgNjguODE0IDUyNS4xNTMgNjcuMjE4MSA1MjUuMTUzIDYzLjU3OTVDNTI1LjE1MyA2MC4xODAzIDUyMy4zMzQgNTkuMjA2OCA1MTYuMTY5IDU4LjI0OTNMNDk5LjAxMyA1Ni4xNzQ3QzQ4Ni44NjkgNTQuODUwMSA0ODAuMDcgNDkuMzc2MyA0ODAuMDcgMzkuMTc4N0M0ODAuMDcgMjguNDg2MyA0ODkuMTgyIDIwLjAyODIgNTEwLjA1NiAyMC4wMjgyQzUyOS45NzMgMjAuMDI4MiA1NDEuMjcyIDI3LjU0NDggNTQxLjI3MiA0Mi4zNzA0VjQyLjczNzRINTIzLjA5NVY0Mi4wMDM0QzUyMy4wOTUgMzcuMDI0MiA1MjAuNjUzIDM0LjQ3MDggNTA5LjQ4MiAzNC40NzA4QzUwMC4zODYgMzQuNDcwOCA0OTguMDcxIDM2LjA2NjcgNDk4LjA3MSAzOS45Mjg3QzQ5OC4wNzEgNDMuMTIwNSA0OTkuNzc5IDQ0LjQyOTEgNTA3Ljc5IDQ1LjQwMjVMNTIwLjc4MSA0Ni45OTg0QzUzNy4wNTkgNDguODE3NyA1NDMuMTIzIDU0LjI3NTYgNTQzLjEyMyA2NC4zNjE1QzU0My4xMjMgNzUuNzcyIDUzMS44NCA4My4zMDQ1IDUxMy4wMDkgODMuMzA0NUM0OTIuNDg2IDgzLjI1NjcgNDgxLjE4NyA3NS4yNDU0IDQ4MS4xODcgNjEuMTUzOFoiIGZpbGw9IiMxRTE5MjYiLz4KPHBhdGggZD0iTTU4NC4zMTMgODMuMjU2N0M1NjkuNTE5IDgzLjI1NjcgNTYwLjUzNCA3Ni4yOTg2IDU2MC41MzQgNjAuMzU1OVYzNS41NzJINTUwLjU0NFYxOS44ODQ2SDU2MC41MzRWMEg1NzkuNTA5VjE5LjgyMDdINjAwVjM1LjUwODJINTc5LjUwOVY1OC4xNTM2QzU3OS41MDkgNjQuNTM3MSA1ODEuOTE5IDY2LjEzMjkgNTg4LjYyMSA2Ni4xMzI5SDYwMFY4My4yMDg4TDU4NC4zMTMgODMuMjU2N1oiIGZpbGw9IiMxRTE5MjYiLz4KPC9zdmc+Cg=="
+                                                        alt="phoenix" width="258" />
+                                                </div>
+                                            </a>
+                                            <h3 class="text-1000">Sign In</h3>
+                                            <p class="text-700">Get access to your account</p>
+                                            <p id="otptitle" hidden>OTP Validate</p>
+                                        </div>
+                                        <!-- <form action="{% url 'login' %}" method="post" autocomplete="off">
+                                            {% csrf_token %}
+                                            <div class="mb-3 text-start"><label class="form-label" for="email">Email
+                                                    address</label>
+                                                <div class="form-icon-container">
+                                                    <input class="form-control form-icon-input" id="email" type="text"
+                                                        name="username" placeholder="name@example.com" />
+                                                    <span class="fas fa-user text-900 fs--1 form-icon"></span>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary w-100 mb-3 mt-5">Sent OTP</button>
+                                        </form> -->
+                                        <div id="emailform">
+                                            <form id="login-form" method="post" autocomplete="off">
+                                                {% csrf_token %}
+                                                <div class="mb-3 text-start"><label class="form-label" for="email">Email
+                                                        address</label>
+                                                    <div class="form-icon-container">
+                                                        <input class="form-control form-icon-input" id="email"
+                                                            type="email" name="username" placeholder="name@example.com"
+                                                            required />
+                                                        <span class="fas fa-user text-900 fs--1 form-icon"></span>
+                                                    </div>
+                                                </div>
+                                                <button id="otp-button" class="btn btn-primary w-100 mb-3 mt-5">
+                                                    <span id="btn_text">SentOTP</span>
+                                                    <span><div class="spinner-border" role="status" id="loading-spinner" style="display: none;"><span class="visually-hidden">Loading...</span></div></span> 
+                                                </button>
+
+                                                    
+                                            </form>
+                                        </div>
+
+                                        <div id="otpform" hidden>
+                                            <form action="{% url 'login' %}" method="post" autocomplete="off">
+                                                {% csrf_token %}
+                                                <input type="email" name="otp_email" id="email_otp" value="" hidden>
+                                                <div class="mb-3 text-start">
+                                                    <div class="container w-60">
+                                                        <div class="container-body">
+                                                            <div class="mb-3 text-center">
+                                                                <div class="row g-1 ">
+                                                                    <div class="col-sm">
+                                                                        <input class="form-control" type="text"
+                                                                            maxlength="1" required name="otp_1" oninput="digitValidate(this)" onkeyup="tabChange(1)" />
+                                                                    </div>
+                                                                    <div class="col-sm">
+                                                                        <input class="form-control" type="text"
+                                                                            maxlength="1" required name="otp_2" oninput="digitValidate(this)" onkeyup="tabChange(2)"/>
+                                                                    </div>
+                                                                    <div class="col-sm">
+                                                                        <input class="form-control" type="text"
+                                                                            maxlength="1" required name="otp_3" oninput="digitValidate(this)" onkeyup="tabChange(3)"/>
+                                                                    </div>
+                                                                    <div class="col-sm">
+                                                                        <input class="form-control" type="text"
+                                                                            maxlength="1" required name="otp_4" oninput="digitValidate(this)" onkeyup="tabChange(4)"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <button id="otp-button"
+                                                    class="btn btn-primary w-100 mb-3 mt-5">Verify</button>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#login-form').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                console.log(formData)
+                $('#loading-spinner').show();
+                $('#btn_text').hide();
+
+                $.ajax({
+                    url: "{% url 'login_ajax' %}",
+                    type: 'post',
+                    data: formData,
+                    success: function (response) {
+                        $('#emailform').hide();
+
+                        $('#otpform').removeAttr('hidden');
+                        $('#otptitle').removeAttr('hidden');
+                        console.log('OTP sent: ' + response.username)
+                        $('#email_otp').val(response.username);
+                    },
+                    complete: function () {
+                        // Hide the loading spinner
+                        $('#loading-spinner').hide();
+                    }
+                });
+            });
+        });
+    </script>
+
+
+<script>
+      let digitValidate = function (ele) {
+      ele.value = ele.value.replace(/[^0-9]/g, '');
+    }
+    let tabChange = function (val) {
+      let ele = document.querySelectorAll('input');
+      if (ele[val - 1].value != '') {
+        ele[val].focus()
+      }
+      else if (ele[val - 1].value == '') {
+        ele[val - 2].focus()
+      }
+    }
+                    
+</script>
+
+
+
+    <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+    <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+    <script src="{% static 'vendors/is/is.min.js'%}"></script>
+    <script src="{% static 'vendors/fontawesome/all.min.js'%}"></script>
+    <script src="{% static 'vendors/lodash/lodash.min.js'%}"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+    <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+    <script src="{% static 'vendors/dayjs/dayjs.min.js'%}"></script>
+    <script src="{% static 'admin/js/phoenix.js' %}"></script>
+</body>
+
+</html>
